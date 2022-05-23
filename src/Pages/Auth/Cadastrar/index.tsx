@@ -33,7 +33,7 @@ const Cadastrar: React.FC = () => {
             <Pressable style={{ alignSelf: 'flex-start', padding: 10 }}
                 onPress={() => { navigation.goBack() }}
             >
-                <ArrowCircleLeft size={32} color="#545454" />
+                <ArrowCircleLeft size={42} color="#545454" />
             </Pressable>
             <ImageTop source={require('../../../assets/line-top.png')} />
             <ContainerInformation>
