@@ -7,7 +7,7 @@ import BottomSheet, {
   useBottomSheetSpringConfigs,
   useBottomSheetTimingConfigs,
 } from '@gorhom/bottom-sheet';
-import {PlusCircle} from 'phosphor-react-native';
+import {Eye,Gear} from 'phosphor-react-native';
 import {Easing} from 'react-native-reanimated';
 import {
   Container,
@@ -24,8 +24,16 @@ import {
   TitleBox,
   VolBox,
   Bar,
+  AmountTop,
+  TopContent,
+  ButtonVer,
+  Detail,
+  RightViewTop,
+  ButtonConf,
+  CenterHead,
 } from './style';
 import LinearGradient from 'react-native-linear-gradient';
+import BoxElement from '../../../components/BoxElement/Index';
 
 const DashBoard: React.FC = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -52,103 +60,60 @@ const DashBoard: React.FC = () => {
   });
 
   return (
-    <Container>
-      <BottomSheet
-        ref={bottomSheetRef}
-        snapPoints={animatedSnapPoints}
-        handleHeight={animatedHandleHeight}
-        contentHeight={animatedContentHeight}
-        animationConfigs={animationConfigs_2}>
-        <BottomSheetView onLayout={handleContentLayout}>
-          <ContainerInformation>
-            <TopInf>
-              <LeftView>
-                <Title>Transaçōes</Title>
-              </LeftView>
-              <RightView>
-                <ButtonMore>
-                  <PlusCircle
-                    size={32}
-                    weight="fill"
-                    color="#262626"
-                    style={{marginTop: 8, marginLeft: 8}}
-                  />
-                  <More>Ver mais</More>
-                </ButtonMore>
-              </RightView>
-            </TopInf>
-            <SectionTop>
-              <LeftView>
-                <Box>
-                  <LinearGradient
-                    colors={[
-                      'rgba(207, 207, 207, 0.26)',
-                      'rgba(207, 207, 207, 0)',
-                    ]}
-                    style={{flex: 1, borderRadius: 10}}>
-                    <ImgType source={require('../../../assets/Saly-11.png')} />
-                    <TitleBox>Pagamentos</TitleBox>
-                    <VolBox>20.12Kz</VolBox>
-                    <Bar>
-                      <ProgressBar progress={0.5} color={'#BFBCE8'} />
-                    </Bar>
-                  </LinearGradient>
-                </Box>
+    <LinearGradient
+      start={{x: 0.0, y: 0.3}}
+      end={{x: 0, y: 0.0}}
+      style={{flex: 1}}
+      colors={['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.9)']}>
+      <Container>
+        <TopContent>
+          <RightViewTop>
+            <ButtonConf>
+              <Gear size={32} color={'#fff'} weight="fill"/>
+            </ButtonConf>
+          </RightViewTop>
+          <CenterHead>
+            <AmountTop>AOA 4.000.000.00</AmountTop>
+            <ButtonVer>
+              <Eye size={28} weight={'fill'} color={'#fff'} style={{paddingLeft:10}}/>
+              <Detail>Mostrar</Detail>
+            </ButtonVer>
+          </CenterHead>
+        </TopContent>
 
-                <Box>
-                  <LinearGradient
-                    colors={[
-                      'rgba(207, 207, 207, 0.26)',
-                      'rgba(207, 207, 207, 0)',
-                    ]}
-                    style={{flex: 1, borderRadius: 10}}>
-                    <ImgType source={require('../../../assets/Saly-42.png')} />
-                    <TitleBox>Transferências</TitleBox>
-                    <VolBox>20.12Kz</VolBox>
-                    <Bar>
-                      <ProgressBar progress={0.5} color={'#BFBCE8'} />
-                    </Bar>
-                  </LinearGradient>
-                </Box>
-              </LeftView>
-
-              <RightView>
-                <Box>
-                  <LinearGradient
-                    colors={[
-                      'rgba(207, 207, 207, 0.26)',
-                      'rgba(207, 207, 207, 0)',
-                    ]}
-                    style={{flex: 1, borderRadius: 10}}>
-                    <ImgType source={require('../../../assets/Sally-4.png')} />
-                    <TitleBox>Depósitos</TitleBox>
-                    <VolBox>20.12Kz</VolBox>
-                    <Bar>
-                      <ProgressBar progress={0.5} color={'#BFBCE8'} />
-                    </Bar>
-                  </LinearGradient>
-                </Box>
-                <Box>
-                  <LinearGradient
-                    colors={[
-                      'rgba(207, 207, 207, 0.26)',
-                      'rgba(207, 207, 207, 0)',
-                    ]}
-                    style={{flex: 1, borderRadius: 10}}>
-                    <ImgType source={require('../../../assets/Saly-45.png')} />
-                    <TitleBox>Outros</TitleBox>
-                    <VolBox>20.12Kz</VolBox>
-                    <Bar>
-                      <ProgressBar progress={0.5} color={'#BFBCE8'} />
-                    </Bar>
-                  </LinearGradient>
-                </Box>
-              </RightView>
-            </SectionTop>
-          </ContainerInformation>
-        </BottomSheetView>
-      </BottomSheet>
-    </Container>
+        <BottomSheet
+          ref={bottomSheetRef}
+          snapPoints={animatedSnapPoints}
+          handleHeight={animatedHandleHeight}
+          contentHeight={animatedContentHeight}
+          animationConfigs={animationConfigs_2}>
+          <BottomSheetView onLayout={handleContentLayout}>
+            <ContainerInformation>
+              <TopInf>
+                <LeftView>
+                  <Title>Transaçōes</Title>
+                </LeftView>
+              </TopInf>
+              <SectionTop>
+                <LeftView>
+                  <BoxElement type="Pagamentos" amount={230} bar={0.2} />
+                  <BoxElement type="Transferências" amount={500} bar={0.2} />
+                </LeftView>
+                <RightView>
+                  <BoxElement type="Depósitos" amount={2930} bar={0.6} />
+                  <BoxElement type="Outros" amount={309} bar={0.3} />
+                </RightView>
+              </SectionTop>
+              <TopInf>
+                <LeftView>
+                  <Title>Recentes</Title>
+                </LeftView>
+              </TopInf>
+            </ContainerInformation>
+          </BottomSheetView>
+        </BottomSheet>
+      </Container>
+    </LinearGradient>
   );
 };
 
