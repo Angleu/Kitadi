@@ -13,9 +13,10 @@ interface IData {
   type: string;
   amount: number;
   bar: number;
+  onPress?:Function;
 }
 
-const BoxElement: React.FC<IData> = ({type, amount, bar}) => {
+const BoxElement: React.FC<IData> = ({type, amount, bar, onPress}) => {
 
 
   const GRADIENT = ['rgba(207, 207, 207, 0.26)', 'rgba(207, 207, 207, 0)'];
@@ -25,10 +26,10 @@ const BoxElement: React.FC<IData> = ({type, amount, bar}) => {
   
 
   return (
-    <Box>
+    <Box onPress={onPress}>
       <LinearGradient
-        colors={['rgba(207, 207, 207, 0.26)', 'rgba(207, 207, 207, 0)']}
-        style={{flex: 1, borderRadius: 10}}>
+        colors={GRADIENT}
+        style={STYLE}>
          <ImgType source={type==='Pagamentos'?Pagamentos:(type==='Depósitos'?Depositos:(type==='Transferências'?Transferencias:Outros))}/>
         <TitleBox>{type}</TitleBox>
         <VolBox>{amount}Kz</VolBox>

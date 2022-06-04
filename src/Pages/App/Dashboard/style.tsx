@@ -1,10 +1,13 @@
 import styled from 'styled-components/native';
 
+export const Content = styled.View`
+  height: 250px;
+`;
+
 export const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: space-between;
-
   padding: 40px 24px;
 `;
 
@@ -26,6 +29,12 @@ export const ContainerInformation = styled.View`
 export const Title = styled.Text`
   color: #1d5c63;
   font-size: 24px;
+  font-weight: bold;
+  padding-top: 8px;
+`;
+export const TitleTop = styled.Text`
+  color: #1d5c63;
+  font-size: 30px;
   font-weight: bold;
   padding-top: 8px;
 `;
@@ -58,6 +67,15 @@ export const TopContent = styled.View`
   flex: 0.3;
   width: 100%;
 `;
+
+export const TopContentTitle = styled.View`
+  margin-bottom: 30px;
+  width: 100%;
+`;
+
+export const Icons = styled.View`
+  flex-direction: row;
+`;
 export const TopInf = styled.View`
   flex: 1;
 `;
@@ -65,6 +83,28 @@ export const TopInf = styled.View`
 export const LeftView = styled.View`
   flex: 1;
   flex-basis: 0%;
+`;
+
+export const LeftViewTop = styled.View``;
+
+export const ContentRow = styled.View`
+  flex-direction: row;
+  text-align: center;
+  width: 100%;
+`;
+
+export const CenterTitle = styled.View`
+  width: 85%;
+  align-items: center;
+`;
+export const CenterTitleTop = styled.View`
+  width: 100%;
+  align-items: center;
+`;
+
+export const Information = styled.View`
+  flex: 1;
+  text-align: center;
 `;
 
 export const RightView = styled.View`
@@ -77,6 +117,10 @@ export const RightViewTop = styled.View`
 `;
 export const ButtonConf = styled.TouchableOpacity`
   border: 1px solid #fff;
+  border-radius: 30px;
+  padding: 5px;
+`;
+export const ButtonBack = styled.TouchableOpacity`
   border-radius: 30px;
   padding: 5px;
 `;
@@ -93,4 +137,14 @@ export const SectionTop = styled.View`
 
 export const FlatList = styled.FlatList`
   width: 100%;
+`;
+
+export const Button = styled.TouchableOpacity`
+margin-left: 60px;
+margin-right: 60px;
+`;
+
+export const Icon = styled.Image`
+  width: 42px;
+  height: 42px;
 `;

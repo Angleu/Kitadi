@@ -1,11 +1,17 @@
-import React, {useState,useContext} from 'react';
-import {Pressable,Keyboard, KeyboardAvoidingView} from 'react-native';
+import React, {useState, useContext} from 'react';
+import {Pressable, Keyboard, KeyboardAvoidingView} from 'react-native';
 import {ArrowCircleLeft} from 'phosphor-react-native';
 import Input from '../../../components/Input';
-import Button from "../../../components/Button";
+import Button from '../../../components/Button';
 import {useNavigation} from '@react-navigation/native';
-import {Container, ContainerInformation, ImageTop,ImageBottom, Title} from './style';
-import ValidationContext from "../../../context/Validation";
+import {
+  Container,
+  ContainerInformation,
+  ImageTop,
+  ImageBottom,
+  Title,
+} from './style';
+import ValidationContext from '../../../context/Validation';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -17,14 +23,13 @@ const Login: React.FC = () => {
     // console.warn(email)
     Keyboard.dismiss();
     if (email === '' || password === '') {
-        // validationContext.setIsLoad(true);
-        validationContext.setTitleError("Erro no Cadastro");
-        validationContext.setInformation("Precisa preencher os campos em falta");
-        validationContext.setIsVisible(true);
-    } else
-        navigation.navigate({ name: "Dashboard" as never, params: {} as never });
-
-}
+      // validationContext.setIsLoad(true);
+      validationContext.setTitleError('Erro no Cadastro');
+      validationContext.setInformation('Precisa preencher os campos em falta');
+      validationContext.setIsVisible(true);
+    } else navigation.navigate('auth');
+    // navigation.navigate({ name: "Dashboard" as never, params: {} as never });
+  }
 
   return (
     <Container>
@@ -36,9 +41,9 @@ const Login: React.FC = () => {
         <ArrowCircleLeft size={42} color="#545454" />
       </Pressable>
       <ImageTop source={require('../../../assets/line-top.png')} />
-      
+
       <ContainerInformation>
-      <Title>Dados de Acesso</Title>
+        <Title>Dados de Acesso</Title>
         <Input
           placeholder="Email"
           autoComplete="email"
@@ -54,7 +59,7 @@ const Login: React.FC = () => {
       </ContainerInformation>
       <Button text="Continuar" outline={false} onPress={continuar} />
 
-            <ImageBottom source={require('../../../assets/line-bottom.png')} />
+      <ImageBottom source={require('../../../assets/line-bottom.png')} />
     </Container>
   );
 };
