@@ -6,6 +6,8 @@ import { Keyboard, KeyboardAvoidingView, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Input from "../../../components/Input/";
 import ValidationContext from "../../../context/Validation";
+import UserServices from "../../../services/UserServices";
+
 
 const Cadastrar: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -14,17 +16,38 @@ const Cadastrar: React.FC = () => {
 
     const navigation = useNavigation()
     const validationContext = useContext(ValidationContext);
-
-    function continuar() {
+    async function continuar() {
         // console.warn(email)
         Keyboard.dismiss();
         if (email === '' || password === '' || telephone === '') {
-            // validationContext.setIsLoad(true);
+            validationContext.setIsLoad(false);
             validationContext.setTitleError("Erro no Cadastro");
             validationContext.setInformation("Precisa preencher os campos em falta");
             validationContext.setIsVisible(true);
-        } else
-            navigation.navigate({ name: "validationPage" as never, params: {} as never });
+        } else {
+            try {
+                validationContext.setIsLoad(true);
+            validationContext.setIsVisible(true);
+                const result = await new UserServices().saveLogin({ email, password, confirmPassword: password, telephone });
+                if (result instanceof Object) {
+                    validationContext.setIsLoad(false);
+                    navigation.navigate({
+                        name: "CadastroDadosPessoais", params: {
+                            email: email
+                        }
+                    } as never);
+                }
+                validationContext.setIsVisible(false);
+                validationContext.setIsLoad(false);
+
+            } catch (error) {
+                validationContext.setIsLoad(false);
+                validationContext.setTitleError("Erro no Cadastro");
+                validationContext.setInformation(error);
+                validationContext.setIsVisible(true);
+            }
+
+        }
 
     }
 

@@ -119,7 +119,7 @@ const DashBoard: React.FC = () => {
     overshootClamping: true,
     restDisplacementThreshold: 0.1,
     restSpeedThreshold: 0.1,
-    stiffness: 500,
+    stiffness: 500
   });
 
   return (
@@ -176,7 +176,7 @@ const DashBoard: React.FC = () => {
                       amount={230}
                       bar={0.2}
                       onPress={() =>
-                        navigation.navigate('Details', {type: 'Pagamentos'})
+                        navigation.navigate('Details' as never, {type: 'Pagamentos'})
                       }
                     />
                     <BoxElement

@@ -11,11 +11,12 @@ import RNPickerSelect from 'react-native-picker-select';
 import DatePicker from "react-native-date-picker";
 
 
-const CadastroDadosPessoais = () => {
+const CadastroDadosPessoais: React.FC = (props) => {
     const [nome, setNome] = useState("")
     const [sexo, setSexo] = useState("")
     const [date, setDate] = useState(new Date())
 
+    // console.log(props.route.params.email);
     const navigation = useNavigation();
     return (
         <Container style={{ backgroundColor: '#E5E5E5' }}>
@@ -41,7 +42,7 @@ const CadastroDadosPessoais = () => {
                     }}
                         onValueChange={(value) => setSexo(value)}
                         items={[
-                            { label: 'Masculino', value: 'football' },
+                            { label: 'Masculino', value: 'masculino' },
                             { label: 'Femenino', value: 'femenino' },
                             { label: 'Outro', value: 'outro' },
                         ]}
@@ -57,7 +58,12 @@ const CadastroDadosPessoais = () => {
                             marginBottom: 10
                         }}
                     />
-                    <Button outline={false} text="Avançar" onPress={() => navigation.navigate({ name: 'cadastoConta', params: {} } as never)} />
+                    <Button outline={false} text="Avançar" onPress={() => navigation.navigate({ name: 'cadastroEndereco', params: {
+                        email: props.route.params.email,
+                        nome: nome, 
+                        sexo: sexo,
+                        date: date.toDateString()
+                    } } as never)} />
                 </KeyboardAvoidingView>
             </ContainerDadosPessoias>
             <ImageBottom source={require('../../../assets/line-bottom.png')} />

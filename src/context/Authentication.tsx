@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useCallback, useState } from "react";
 
 interface IApplicationContext {
     user: object | null;
@@ -6,6 +6,8 @@ interface IApplicationContext {
     account: object | null;
     setAccount: Function;
     isLogin: boolean;
+    login: Function;
+
 
 }
 
@@ -15,9 +17,13 @@ export const AuthenticationProvider: React.FC = ({ children }) => {
     const [account, setAccount] = useState<object | null>(null);
     const [user, setUser] = useState<object | null>(null);
 
+    const login = useCallback((email: string, password: string) => {
+
+    }, [])
+
     return (
         <AuthenticationContext.Provider
-            value={{ isLogin: (!!user && !!account), account, setAccount, user, setUser }}>
+            value={{ isLogin: (!!user && !!account), account, setAccount, user, setUser, login }}>
             {children}
         </AuthenticationContext.Provider>
     )
