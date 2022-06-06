@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef} from 'react';
+import React, {useCallback, useContext, useMemo, useRef} from 'react';
 import {Dimensions} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {ScrollView, FlatList} from 'react-native-gesture-handler';
@@ -33,6 +33,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import BoxElement from '../../../components/BoxElement/Index';
 import {CardTransations} from '../../../components/CardTransations';
+import AuthenticationContext from '../../../context/Authentication';
 
 const Y_SIZE = Dimensions.get('window').height;
 
@@ -86,6 +87,7 @@ const Transations = [
 
 const DashBoard: React.FC = () => {
   const navigation = useNavigation();
+  const globalContext = useContext(AuthenticationContext);
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -136,7 +138,7 @@ const DashBoard: React.FC = () => {
             </ButtonConf>
           </RightViewTop>
           <CenterHead>
-            <AmountTop>AOA 4.000.000.00</AmountTop>
+            <AmountTop>AOA {globalContext.account.balance}</AmountTop>
             <ButtonVer>
               <Eye
                 size={28}
