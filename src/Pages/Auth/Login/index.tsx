@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { Pressable, Keyboard, KeyboardAvoidingView } from 'react-native';
-import { ArrowCircleLeft } from 'phosphor-react-native';
+import React, {useState, useContext} from 'react';
+import {Pressable, Keyboard, KeyboardAvoidingView} from 'react-native';
+import {ArrowCircleLeft} from 'phosphor-react-native';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {
   Container,
   ContainerInformation,
@@ -26,36 +26,41 @@ const Login: React.FC = () => {
   const authContext = useContext(AuthenticationContext);
 
   async function logar(email: string, password: string) {
-    console.log(email, password)
+    console.log(email, password);
     const loginResponse = await new LoginServices().login(email, password);
     console.log(loginResponse);
-    if (loginResponse instanceof Error)
-      return null;
+    if (loginResponse instanceof Error) return null;
 
     if (loginResponse) {
-      const { id_login } = loginResponse;
+      const {id_login} = loginResponse;
       const userResponse = await new UserServices().executeOne(id_login);
       if (userResponse instanceof Object) {
         authContext.setUser(userResponse);
-        await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(userResponse));
-
+        await AsyncStorage.setItem(
+          '@RNAuth:user',
+          JSON.stringify(userResponse),
+        );
       }
-      const responseAccount = await new AccountServices().executeOne(userResponse?.id_user as string)
+      const responseAccount = await new AccountServices().executeOne(
+        userResponse?.id_user as string,
+      );
       if (responseAccount instanceof Object) {
         authContext.setAccount(responseAccount);
-        await AsyncStorage.setItem('@RNAuth:account', JSON.stringify(responseAccount));
+        await AsyncStorage.setItem(
+          '@RNAuth:account',
+          JSON.stringify(responseAccount),
+        );
       }
     }
 
     authContext.setLogin({
       email: loginResponse.email,
       id_login: loginResponse.id_login,
-      telephone: loginResponse.telephone
+      telephone: loginResponse.telephone,
     });
     await AsyncStorage.setItem('@RNAuth:login', JSON.stringify(loginResponse));
 
     return authContext.login;
-
   }
 
   async function continuar() {
@@ -74,28 +79,24 @@ const Login: React.FC = () => {
         const result = await logar(email, password);
         // console.log(result);
         if (result)
-          navigation.navigate({ name: "auth" as never, params: {} as never });
+          navigation.navigate({name: 'auth' as never, params: {} as never});
 
         validationContext.setIsVisible(false);
         validationContext.setIsLoad(false);
-
       } catch (error) {
-        console.log(error)
+        console.log(error);
         validationContext.setIsLoad(false);
         validationContext.setTitleError('Erro nos dados de Acesso');
         validationContext.setInformation('Verifique o seu email e senha');
         validationContext.setIsVisible(true);
       }
-
     }
   }
-
-
 
   return (
     <Container>
       <Pressable
-        style={{ alignSelf: 'flex-start', padding: 10 }}
+        style={{alignSelf: 'flex-start', padding: 10}}
         onPress={() => {
           navigation.goBack();
         }}>
@@ -105,6 +106,7 @@ const Login: React.FC = () => {
 
       <ContainerInformation>
         <Title>Dados de Acesso</Title>
+
         <Input
           placeholder="Email"
           autoComplete="email"
@@ -117,8 +119,8 @@ const Login: React.FC = () => {
           onChange={text => setPassword(text)}
           value={password}
         />
+        <Button text="Continuar" outline={false} onPress={continuar} />
       </ContainerInformation>
-      <Button text="Continuar" outline={false} onPress={continuar} />
 
       <ImageBottom source={require('../../../assets/line-bottom.png')} />
     </Container>

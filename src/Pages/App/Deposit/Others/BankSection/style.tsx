@@ -22,6 +22,8 @@ export const ContainerTop = styled.View`
     flex-direction: row;
     align-items: center;
     margin-top: 40px;
+    margin-bottom: 68px;
+
 `
 
 export const ContainerInput = styled.View`
@@ -33,7 +35,9 @@ export const ContainerInput = styled.View`
 export const Text = styled.Text`
     font-size: 18px;
     text-align: center;
-    margin-top : 30px;
+    /* margin-top : 30px; */
     color: #000;
+    margin-bottom: 68px;
+
 
 `

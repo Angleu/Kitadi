@@ -1,28 +1,26 @@
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 
-export const Container = styled(LinearGradient).attrs({
-  colors: ['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.3)'],
-  start: { x: 0.0, y: 0.7 },
-  end: { x: 0, y: 0.0 },
-})`
+export const Container = styled.View`
   flex: 1;
   align-items: center;
   padding: 10px 24px;
- `;
+`;
+
 export const Content = styled.View`
   flex: 1;
-
   margin-left: 20px;
   margin-right: 20px;
 `;
 
 export const TopContentTitle = styled.View`
-  /* margin: 60px 10px; */
-  flex: 1;
+
+  /* flex: 1; */
+  margin-top: 78px;
+  margin-bottom: 71px;
   width: 100%;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
 `;
 export const ContentRow = styled.View`
@@ -37,9 +35,10 @@ export const CenterTitle = styled.View`
 `;
 export const CenterTitleTop = styled.View`
   /* align-items: center; */
-  /* align-self: center; */
-  /* flex: 1; */
-  /* background-color: red; */
+  /* justify-content: center; */
+  flex: 1;
+  width: 100%;
+
 `;
 
 export const TitleTop = styled.Text`
@@ -57,7 +56,6 @@ export const LabelBank = styled.Text`
   font-size: 18px;
   color: #1d5c63;
   font-weight: bold;
-
 `;
 export const ContentBank = styled.View`
   width: 100%;
@@ -80,7 +78,8 @@ export const ContentButton = styled.View`
   width: 100%;
   justify-content: flex-end;
   align-items: center;
-  margin: 30px;
+  margin-bottom: 30px;
+
 `;
 
 export const Button = styled.TouchableOpacity`
