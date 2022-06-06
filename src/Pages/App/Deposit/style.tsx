@@ -1,10 +1,15 @@
+import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled(LinearGradient).attrs({
+  colors: ['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.3)'],
+  start: { x: 0.0, y: 0.7 },
+  end: { x: 0, y: 0.0 },
+})`
   flex: 1;
   align-items: center;
-  padding: 40px 24px;
-`;
+  padding: 10px 24px;
+ `;
 export const Content = styled.View`
   flex: 1;
 
@@ -13,9 +18,12 @@ export const Content = styled.View`
 `;
 
 export const TopContentTitle = styled.View`
-  margin: 60px 10px;
+  /* margin: 60px 10px; */
+  flex: 1;
   width: 100%;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;
 export const ContentRow = styled.View`
   flex-direction: row;
@@ -28,32 +36,40 @@ export const CenterTitle = styled.View`
   align-items: center;
 `;
 export const CenterTitleTop = styled.View`
-  width: 83%;
-  align-items: center;
+  /* align-items: center; */
+  /* align-self: center; */
+  /* flex: 1; */
+  /* background-color: red; */
 `;
 
 export const TitleTop = styled.Text`
   color: #1d5c63;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
-  padding-top: 8px;
+  text-align: center;
+  align-self: center;
+  align-self: center;
 `;
 
 export const LabelBank = styled.Text`
   margin-top: 20px;
-  font-size: 16px;
-  color: #717e95;
+
+  font-size: 18px;
+  color: #1d5c63;
+  font-weight: bold;
+
 `;
 export const ContentBank = styled.View`
-  margin-top: 30px;
-  width: 98%;
+  width: 100%;
 `;
 export const Pressable = styled.TouchableOpacity``;
 
 export const SubmitButton = styled.TouchableOpacity`
   width: 100%;
-  height: 300px;
-  border: 1px solid rgba(113, 126, 149, 0.1);
+  height: 200px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(113, 126, 149, 0.1);
   border-radius: 10px;
   margin-top: 10px;
   background-color: rgba(255, 255, 255, 0.284);

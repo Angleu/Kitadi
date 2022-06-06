@@ -21,7 +21,7 @@ export const ImageBottom = styled.Image`
   left: 0;
 `;
 export const ContainerInformation = styled.View`
-  width: 95%;
+  width: 100%;
   margin-top: 20px;
   margin-left: 3%;
 `;
@@ -34,7 +34,7 @@ export const Title = styled.Text`
 `;
 export const TitleTop = styled.Text`
   color: #1d5c63;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: bold;
   padding-top: 8px;
 `;
@@ -122,7 +122,9 @@ export const ButtonConf = styled.TouchableOpacity`
 `;
 export const ButtonBack = styled.TouchableOpacity`
   border-radius: 30px;
-  padding: 5px;
+  flex: 1;
+  /* padding: 5px; */
+  /* align-self: flex-start; */
 `;
 export const CenterHead = styled.View`
   justify-content: center;

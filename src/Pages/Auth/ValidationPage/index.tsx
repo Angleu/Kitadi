@@ -8,13 +8,15 @@ import { ArrowCircleLeft } from "phosphor-react-native";
 import { useNavigation } from "@react-navigation/native";
 
 
-const ValidationPage = () => {
+const ValidationPage : React.FC = (props) => {
     const [code, setCode] = useState('');
 
     const navigation = useNavigation();
     function verificar() {
         if (Number.parseInt(code))
-            navigation.navigate({ name: 'CadastroDadosPessoais' as never, params: {} as never });
+            navigation.navigate({ name: 'CadastroDadosPessoais' as never, params: {
+                email: props.route.params.email
+            } as never });
     }
     return (
         <Container style={{ backgroundColor: '#E5E5E5' }}>

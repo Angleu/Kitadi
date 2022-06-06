@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef} from 'react';
+import React, {useCallback, useContext, useMemo, useRef} from 'react';
 import {Dimensions} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {ScrollView, FlatList} from 'react-native-gesture-handler';
@@ -33,8 +33,12 @@ import {Content} from '../Deposit/style';
 import LinearGradient from 'react-native-linear-gradient';
 import BoxElement from '../../../components/BoxElement/Index';
 import {CardTransations} from '../../../components/CardTransations';
+
 import {ContentButton} from '../Deposit/style';
 import {ButtonClose} from '../Details/style';
+
+import AuthenticationContext from '../../../context/Authentication';
+
 
 const Y_SIZE = Dimensions.get('window').height;
 
@@ -89,6 +93,7 @@ const Transations = [
 const DashBoard: React.FC = () => {
   const [title, setTitle] = React.useState('');
   const navigation = useNavigation();
+  const globalContext = useContext(AuthenticationContext);
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -125,7 +130,7 @@ const DashBoard: React.FC = () => {
     overshootClamping: true,
     restDisplacementThreshold: 0.1,
     restSpeedThreshold: 0.1,
-    stiffness: 500,
+    stiffness: 500
   });
 
   return (
@@ -142,7 +147,7 @@ const DashBoard: React.FC = () => {
             </ButtonConf>
           </RightViewTop>
           <CenterHead>
-            <AmountTop>AOA 4.000.000.00</AmountTop>
+            <AmountTop>AOA {globalContext.account.balance}</AmountTop>
             <ButtonVer>
               <Eye
                 size={28}
@@ -184,6 +189,7 @@ const DashBoard: React.FC = () => {
                       onPress={() => {
                         setTitle('Pagamentos'), handlePresentModalPress();
                       }}
+
                     />
                     <BoxElement
                       type="Transferências"

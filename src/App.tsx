@@ -2,7 +2,7 @@ import React from "react";
 import Auth from "./routes/auth";
 import { ValidationProvider } from "./context/Validation";
 import { LogBox } from "react-native";
-
+import Routes from "./routes";
 const App: React.FC = () => {
   LogBox.ignoreLogs([
     "ViewPropTypes will be removed",
@@ -10,7 +10,7 @@ const App: React.FC = () => {
     ])
   return (
     <ValidationProvider>
-      <Auth />
+      <Routes />
     </ValidationProvider>
   )
 }

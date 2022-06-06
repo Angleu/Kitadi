@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Init from '../Pages/Auth/Init';
@@ -13,12 +13,15 @@ import CadastroEndereco from '../Pages/Auth/CadastroEndereco';
 import { BankSection } from '../Pages/App/Deposit/Others/BankSection';
 import { CardDeposit } from '../Pages/App/Deposit/Others/CardDeposit';
 import AppRoute from './App.auth';
+import AuthenticationContext from '../context/Authentication';
 
 const Stack = createNativeStackNavigator()
 
 export default function Auth() {
+    // const generalContext = useContext(AuthenticationContext);
+    // if(generalContext.isLogin)
+
     return (
-        <NavigationContainer>
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }}>
@@ -36,6 +39,5 @@ export default function Auth() {
                 <Stack.Screen name="auth" component={AppRoute} />
 
             </Stack.Navigator>
-        </NavigationContainer>
     );
 }

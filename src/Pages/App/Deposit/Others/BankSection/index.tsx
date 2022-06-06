@@ -1,8 +1,13 @@
+
 import React, {useState, useCallback, useMemo, useRef,useContext} from 'react';
 import {ButtonBack} from '../../../Dashboard/style';
 import {Clipboard} from 'react-native';
+
+import React, { useState, useCallback, useMemo, useRef } from 'react';
+import { ButtonBack } from '../../../Dashboard/style';
+import { Clipboard, View } from 'react-native';
+
 import {
-  Container,
   TopContentTitle,
   CenterTitleTop,
   TitleTop,
@@ -11,7 +16,6 @@ import {
   Pressable,
   SubmitButton,
   ContentButton,
-  Button,
   ButtonInline,
   Content,
 } from '../../style';
@@ -20,16 +24,23 @@ import DocumentPicker, {
 } from 'react-native-document-picker';
 import LinearGradient from 'react-native-linear-gradient';
 import RNPickerSelect from 'react-native-picker-select';
-import {ArrowCircleLeft} from 'phosphor-react-native';
+import { ArrowCircleLeft, FilePdf } from 'phosphor-react-native';
 import InputLayout from '../../../../../components/InputLayout';
+
 import {Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import ValidationContext from '../../../../../context/Validation';
+
+import { useNavigation } from '@react-navigation/native';
+
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
+import { Container, ContainerA, ContainerInput, ContainerTop, Text } from './style';
+import Button from '../../../../../components/Button';
+import Sheet from 'react-modal-sheet'
 
 export const BankSection = () => {
   const navigation = useNavigation();
@@ -38,6 +49,7 @@ export const BankSection = () => {
   const [amount, setAmount] = React.useState('');
   const [coin, setCoin] = React.useState('');
   const [fee, setFee] = React.useState('');
+  const [isOpen, setOpen] = useState(false);
 
   const Bank = [
     {
@@ -81,61 +93,62 @@ export const BankSection = () => {
   }
 
   return (
-    <LinearGradient
-      start={{x: 0.0, y: 0.7}}
-      end={{x: 0, y: 0.0}}
-      style={{flex: 1}}
-      colors={['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.3)']}>
-      <Container>
-        <TopContentTitle>
-          <ButtonBack onPress={() => navigation.goBack()}>
-            <ArrowCircleLeft size={42} color={'#1d5c63'} />
-          </ButtonBack>
-          <CenterTitleTop>
-            <TitleTop>CARREGAMENTO DE CONTA</TitleTop>
-          </CenterTitleTop>
-        </TopContentTitle>
-        <Text
-          style={{
-            fontSize: 16,
-            color: 'rgba(113, 126, 149, 1)',
-            fontWeight: '400',
-          }}>
-          Insira os dados para o carregamento da sua conta
-        </Text>
-        <ContentBank>
-          <LabelBank>Selecione o banco de origem</LabelBank>
-          <RNPickerSelect
-            placeholder={{label: 'Selecione o Banco', value: null}}
-            onValueChange={value => setIban(value)}
-            items={Bank}
-            style={{
-              viewContainer: {
-                borderBottomColor: '#888',
-                borderBottomWidth: 2,
-              },
-              inputAndroid: {
-                color: '#333',
-              },
-            }}
-          />
-          <Pressable onPress={copyToClipboard}>
-            <LabelBank>IBAN</LabelBank>
-            <InputLayout
-              placeholder=""
-              value={iban}
-              onChange={(text: React.SetStateAction<string>) => setIban(text)}
-              editable={false}
-            />
+    <>
+
+      <ContainerA>
+        <ContainerTop>
+          <Pressable
+            onPress={() => { navigation.goBack() }}
+          >
+            <ArrowCircleLeft size={42} color={'#000'} />
           </Pressable>
-          <LabelBank>Carregue o comprovativo de transferência</LabelBank>
-          <SubmitButton onPress={submitPDF} />
-        </ContentBank>
+          <View style={{ flex: 1 }}>
+            <TitleTop>CARREGAMENTO DE CONTA</TitleTop>
+          </View>
+        </ContainerTop>
+        <ContainerInput>
+          <Text>
+            Insira os dados para o carregamento da sua conta
+          </Text>
+          <ContentBank>
+            <LabelBank>Selecione o banco de origem</LabelBank>
+            <RNPickerSelect
+              placeholder={{ label: 'Selecione o Banco', value: null }}
+              onValueChange={value => setIban(value)}
+              items={Bank}
+              style={{
+                viewContainer: {
+                  borderBottomColor: '#888',
+                  borderBottomWidth: 2,
+                },
+                inputAndroid: {
+                  color: '#333',
+                },
+                placeholder: { color: '#000' }
+              }}
+            />
+            <Pressable onPress={copyToClipboard}>
+              <LabelBank>IBAN</LabelBank>
+              <InputLayout
+                placeholder=""
+                value={iban}
+                onChange={(text: React.SetStateAction<string>) => setIban(text)}
+                editable={false}
+
+              />
+            </Pressable>
+            <LabelBank>Carregue o comprovativo de transferência</LabelBank>
+            <SubmitButton onPress={submitPDF} >
+              <FilePdf size={82}
+                color="#cacaca"
+              />
+            </SubmitButton>
+          </ContentBank>
+        </ContainerInput>
         <ContentButton>
-          <Button onPress={handlePresentModalPress}>
-            <Text style={{fontSize: 16, color: '#fff'}}>Confirmar</Text>
-          </Button>
+          <Button outline={false} text="Continual" onPress={() => setOpen(true)} />
         </ContentButton>
+
       </Container>
       <BottomSheetModalProvider>
         <BottomSheetModal
@@ -173,5 +186,12 @@ export const BankSection = () => {
         </BottomSheetModal>
       </BottomSheetModalProvider>
     </LinearGradient>
+
+      </ContainerA>
+     
+    </>
+
   );
 };
+
+ 
