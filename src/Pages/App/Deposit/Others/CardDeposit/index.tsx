@@ -91,7 +91,7 @@ export const CardDeposit = () => {
       <Container>
         <TopContentTitle>
           <ButtonBack onPress={() => navigation.goBack()}>
-            <ArrowCircleLeft size={42} color={'#1d5c63'} />
+            <ArrowCircleLeft size={42} color={'#000'} />
           </ButtonBack>
           <CenterTitleTop>
             <TitleTop>Cartão de Débito/Crédito</TitleTop>

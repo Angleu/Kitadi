@@ -21,7 +21,7 @@ export const ImageBottom = styled.Image`
   left: 0;
 `;
 export const ContainerInformation = styled.View`
-  width: 100%;
+  width: 94%;
   margin-top: 20px;
   margin-left: 3%;
 `;
