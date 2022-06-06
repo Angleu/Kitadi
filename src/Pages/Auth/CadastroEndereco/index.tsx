@@ -5,6 +5,7 @@ import { Keyboard, KeyboardAvoidingView, Pressable } from "react-native";
 import Button from "../../../components/Button";
 import { Container, ImageBottom, ImageTop, Title } from "../../../components/global";
 import Input from "../../../components/Input";
+import AuthenticationContext from "../../../context/Authentication";
 import ValidationContext from "../../../context/Validation";
 import UserServices from "../../../services/UserServices";
 import { ContainerInformation, InputContainer } from "./style";
@@ -18,6 +19,7 @@ const CadastroEndereco: React.FC = (props) => {
 
     const navigation = useNavigation();
     const validationContext = useContext(ValidationContext);
+    const authContext = useContext(AuthenticationContext);
 
 
 
@@ -45,6 +47,7 @@ const CadastroEndereco: React.FC = (props) => {
                 )
 
                 if (result instanceof Object) {
+                    authContext.setUser(result);
                     validationContext.setIsVisible(false);
                     validationContext.setIsLoad(false)
                     navigation.navigate({ name: 'cadastoConta', params: { id_user: result.id_user } } as never)

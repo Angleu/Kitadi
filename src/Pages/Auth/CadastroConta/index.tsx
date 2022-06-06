@@ -10,6 +10,7 @@ import ValidationContext from "../../../context/Validation";
 import Pdf from 'react-native-pdf';
 import Button from "../../../components/Button";
 import AccountServices from "../../../services/AccountServices";
+import AuthenticationContext from "../../../context/Authentication";
 
 
 const CadastroConta: React.FC = (props) => {
@@ -18,6 +19,7 @@ const CadastroConta: React.FC = (props) => {
     const [ficheiro, setFicheiro] = useState<DocumentPickerResponse | null>(null);
     const navigation = useNavigation();
     const validationContext = useContext(ValidationContext);
+    const authContext = useContext(AuthenticationContext);
 
     const submitPDF = async function () {
         const pickFile = await DocumentPicker.pick({
@@ -44,6 +46,7 @@ const CadastroConta: React.FC = (props) => {
                 const result = await new AccountServices().createAccount(props.route.params.id_user, 'AOA', tipoConta, documento, ficheiro as DocumentPickerResponse);
 
                 if (result instanceof Object) {
+                    authContext.setAccount(result);
                     validationContext.setIsVisible(false);
                     validationContext.setIsLoad(false)
                     navigation.navigate({ name: 'auth', params: {} } as never)
