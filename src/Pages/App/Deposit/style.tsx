@@ -7,7 +7,7 @@ export const Container = styled.View`
 `;
 export const Content = styled.View`
   flex: 1;
-  align-items: center;
+
   margin-left: 20px;
   margin-right: 20px;
 `;
@@ -42,7 +42,7 @@ export const TitleTop = styled.Text`
 export const LabelBank = styled.Text`
   margin-top: 20px;
   font-size: 16px;
-  color: rgba(113, 126, 149, 1);
+  color: #717e95;
 `;
 export const ContentBank = styled.View`
   margin-top: 30px;
@@ -63,6 +63,8 @@ export const ContentButton = styled.View`
   flex: 1;
   width: 100%;
   justify-content: flex-end;
+  align-items: center;
+  margin: 30px;
 `;
 
 export const Button = styled.TouchableOpacity`
@@ -87,4 +89,27 @@ export const ButtonInline = styled.TouchableOpacity`
   align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
+`;
+
+export const RowInput = styled.View`
+  flex-direction: row;
+  width: 100%;
+`;
+export const View = styled.View`
+  width: 100%;
+`;
+export const ViewDeposit = styled.View`
+  width: 76%;
+  margin-right: 4%;
+`;
+export const ViewCoin = styled.View`
+  width: 20%;
+`;
+export const ViewDateEx = styled.View`
+  width: 72%;
+  margin-right: 3%;
+`;
+
+export const ViewCvv = styled.View`
+  width: 25%;
 `;

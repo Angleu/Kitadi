@@ -1,4 +1,4 @@
-import { Warning } from "phosphor-react-native";
+import { Warning,CheckCircle } from "phosphor-react-native";
 import React, { createContext, useState } from "react";
 import Modal from "react-native-modal/dist/modal";
 import Button from "../components/Button";
@@ -43,7 +43,8 @@ export const ValidationProvider: React.FC = ({ children }) => {
                 </Container>
             </Modal >) : <Modal isVisible={isVisible} style={{ borderRadius: 10 }} animationOutTiming={700} backdropColor="#545454">
                 <Container>
-                    <Warning size={48} color='#1D5C63' />
+                    <Warning style={{display:(titleError==='Éxito')?'none':'flex'}} size={48} color='#1D5C63' />
+                    <CheckCircle style={{display:(titleError==='Éxito')?'flex':'none'}} size={48} color='#1D5C63' />
                     <TitleError>{titleError}</TitleError>
                     <DescriptionError>{information}</DescriptionError>
                     <Button outline={false} text="Fechar" onPress={() => setIsVisible(false)} />

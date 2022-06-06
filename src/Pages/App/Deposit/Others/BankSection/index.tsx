@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useMemo, useRef} from 'react';
+import React, {useState, useCallback, useMemo, useRef,useContext} from 'react';
 import {ButtonBack} from '../../../Dashboard/style';
 import {Clipboard} from 'react-native';
 import {
@@ -24,6 +24,7 @@ import {ArrowCircleLeft} from 'phosphor-react-native';
 import InputLayout from '../../../../../components/InputLayout';
 import {Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import ValidationContext from '../../../../../context/Validation';
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -65,10 +66,19 @@ export const BankSection = () => {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
-  type dismiss = () => void;
+  const handleClosePress = useCallback(() => {
+    bottomSheetModalRef.current!.close();
+  }, []);
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
+  const validationContext = useContext(ValidationContext);
+  function handleSubmit() {
+    handleClosePress();
+    validationContext.setTitleError('Éxito');
+    validationContext.setInformation('Depósito Realizado');
+    validationContext.setIsVisible(true);
+  }
 
   return (
     <LinearGradient
@@ -149,12 +159,10 @@ export const BankSection = () => {
             </Content>
             <Content>
               <ContentButton>
-                <ButtonInline>
-                  <Text style={{fontSize: 16, color: ' #1d5c63'}}>
-                    Cancelar
-                  </Text>
+                <ButtonInline onPress={handleClosePress}>
+                  <Text style={{fontSize: 16, color: '#1d5c63'}}>Cancelar</Text>
                 </ButtonInline>
-                <Button onPress={handlePresentModalPress}>
+                <Button onPress={handleSubmit}>
                   <Text style={{fontSize: 16, color: '#fff'}}>
                     Confirmar Depósito
                   </Text>
