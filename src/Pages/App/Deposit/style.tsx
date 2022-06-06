@@ -12,7 +12,7 @@ export const Container = styled(LinearGradient).attrs({
  `;
 export const Content = styled.View`
   flex: 1;
-  align-items: center;
+
   margin-left: 20px;
   margin-right: 20px;
 `;
@@ -53,9 +53,11 @@ export const TitleTop = styled.Text`
 
 export const LabelBank = styled.Text`
   margin-top: 20px;
+
   font-size: 18px;
   color: #1d5c63;
   font-weight: bold;
+
 `;
 export const ContentBank = styled.View`
   width: 100%;
@@ -77,6 +79,8 @@ export const ContentButton = styled.View`
   flex: 1;
   width: 100%;
   justify-content: flex-end;
+  align-items: center;
+  margin: 30px;
 `;
 
 export const Button = styled.TouchableOpacity`
@@ -101,4 +105,27 @@ export const ButtonInline = styled.TouchableOpacity`
   align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
+`;
+
+export const RowInput = styled.View`
+  flex-direction: row;
+  width: 100%;
+`;
+export const View = styled.View`
+  width: 100%;
+`;
+export const ViewDeposit = styled.View`
+  width: 76%;
+  margin-right: 4%;
+`;
+export const ViewCoin = styled.View`
+  width: 20%;
+`;
+export const ViewDateEx = styled.View`
+  width: 72%;
+  margin-right: 3%;
+`;
+
+export const ViewCvv = styled.View`
+  width: 25%;
 `;

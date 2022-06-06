@@ -81,7 +81,6 @@ export const TitleBox = styled.Text`
 export const VolBox = styled.Text`
   color: #7a7a7a;
   font-size: 25px;
-  font-weight: lighter;
   margin-left: 24px;
 `;
 export const Bar = styled.View`

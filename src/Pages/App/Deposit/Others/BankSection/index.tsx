@@ -1,6 +1,12 @@
+
+import React, {useState, useCallback, useMemo, useRef,useContext} from 'react';
+import {ButtonBack} from '../../../Dashboard/style';
+import {Clipboard} from 'react-native';
+
 import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { ButtonBack } from '../../../Dashboard/style';
 import { Clipboard, View } from 'react-native';
+
 import {
   TopContentTitle,
   CenterTitleTop,
@@ -20,7 +26,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import RNPickerSelect from 'react-native-picker-select';
 import { ArrowCircleLeft, FilePdf } from 'phosphor-react-native';
 import InputLayout from '../../../../../components/InputLayout';
+
+import {Text} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import ValidationContext from '../../../../../context/Validation';
+
 import { useNavigation } from '@react-navigation/native';
+
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -66,10 +78,19 @@ export const BankSection = () => {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
-  type dismiss = () => void;
+  const handleClosePress = useCallback(() => {
+    bottomSheetModalRef.current!.close();
+  }, []);
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
+  const validationContext = useContext(ValidationContext);
+  function handleSubmit() {
+    handleClosePress();
+    validationContext.setTitleError('Éxito');
+    validationContext.setInformation('Depósito Realizado');
+    validationContext.setIsVisible(true);
+  }
 
   return (
     <>
@@ -127,106 +148,50 @@ export const BankSection = () => {
         <ContentButton>
           <Button outline={false} text="Continual" onPress={() => setOpen(true)} />
         </ContentButton>
+
+      </Container>
+      <BottomSheetModalProvider>
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          index={1}
+          snapPoints={snapPoints}
+          onChange={handleSheetChanges}>
+          <BottomSheetView style={{flex: 1}}>
+            <Content>
+              <TitleTop>DADOS DO DEPÓSITO</TitleTop>
+              <ContentBank>
+                <LabelBank>Proprietário</LabelBank>
+                <InputLayout placeholder="" value={domiciliation}></InputLayout>
+                <LabelBank>Montante</LabelBank>
+                <InputLayout placeholder="" value={amount}></InputLayout>
+                <LabelBank>Moeda</LabelBank>
+                <InputLayout placeholder="" value={coin}></InputLayout>
+                <LabelBank>Taxa</LabelBank>
+                <InputLayout placeholder="" value={fee}></InputLayout>
+              </ContentBank>
+            </Content>
+            <Content>
+              <ContentButton>
+                <ButtonInline onPress={handleClosePress}>
+                  <Text style={{fontSize: 16, color: '#1d5c63'}}>Cancelar</Text>
+                </ButtonInline>
+                <Button onPress={handleSubmit}>
+                  <Text style={{fontSize: 16, color: '#fff'}}>
+                    Confirmar Depósito
+                  </Text>
+                </Button>
+              </ContentButton>
+            </Content>
+          </BottomSheetView>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
+    </LinearGradient>
+
       </ContainerA>
      
     </>
+
   );
 };
 
-  // <LinearGradient
-  //   start={{ x: 0.0, y: 0.7 }}
-  //   end={{ x: 0, y: 0.0 }}
-  //   // style={{ flex: 1 }}
-  //   colors={['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.3)']}
-  // >
-
-  //   <Container>
-  //     <TopContentTitle>
-  //       <ButtonBack onPress={() => navigation.goBack()}>
-  //         <ArrowCircleLeft size={42} color={'#1d5c63'} style={{
-  //           alignSelf: 'flex-start'
-  //         }} />
-  //       </ButtonBack>
-  //         <TitleTop>CARREGAMENTO DE CONTA</TitleTop>
-
-  //     </TopContentTitle>
-  //     <Text
-  //       style={{
-  //         fontSize: 18,
-  //         color: 'rgba(113, 126, 149, 1)',
-  //         fontWeight: '400',
-  //       }}>
-  //       Insira os dados para o carregamento da sua conta
-  //     </Text>
-  //     <ContentBank>
-  //       <LabelBank>Selecione o banco de origem</LabelBank>
-  //       <RNPickerSelect
-  //         placeholder={{ label: 'Selecione o Banco', value: null }}
-  //         onValueChange={value => setIban(value)}
-  //         items={Bank}
-  //         style={{
-  //           viewContainer: {
-  //             borderBottomColor: '#888',
-  //             borderBottomWidth: 2,
-  //           },
-  //           inputAndroid: {
-  //             color: '#333',
-  //           },
-  //         }}
-  //       />
-  //       <Pressable onPress={copyToClipboard}>
-  //         <LabelBank>IBAN</LabelBank>
-  //         <InputLayout
-  //           placeholder=""
-  //           value={iban}
-  //           onChange={(text: React.SetStateAction<string>) => setIban(text)}
-  //           editable={false}
-  //         />
-  //       </Pressable>
-  //       <LabelBank>Carregue o comprovativo de transferência</LabelBank>
-  //       <SubmitButton onPress={submitPDF} />
-  //     </ContentBank>
-  //     <ContentButton>
-  //       <Button onPress={handlePresentModalPress}>
-  //         <Text style={{ fontSize: 16, color: '#fff' }}>Confirmar</Text>
-  //       </Button>
-  //     </ContentButton>
-  //   </Container>
-  //   <BottomSheetModalProvider>
-  //     <BottomSheetModal
-  //       ref={bottomSheetModalRef}
-  //       index={1}
-  //       snapPoints={snapPoints}
-  //       onChange={handleSheetChanges}>
-  //       <BottomSheetView style={{ flex: 1 }}>
-  //         <Content>
-  //           <TitleTop>DADOS DO DEPÓSITO</TitleTop>
-  //           <ContentBank>
-  //             <LabelBank>Proprietário</LabelBank>
-  //             <InputLayout placeholder="" value={domiciliation}></InputLayout>
-  //             <LabelBank>Montante</LabelBank>
-  //             <InputLayout placeholder="" value={amount}></InputLayout>
-  //             <LabelBank>Moeda</LabelBank>
-  //             <InputLayout placeholder="" value={coin}></InputLayout>
-  //             <LabelBank>Taxa</LabelBank>
-  //             <InputLayout placeholder="" value={fee}></InputLayout>
-  //           </ContentBank>
-  //         </Content>
-  //         <Content>
-  //           <ContentButton>
-  //             <ButtonInline>
-  //               <Text style={{ fontSize: 16, color: ' #1d5c63' }}>
-  //                 Cancelar
-  //               </Text>
-  //             </ButtonInline>
-  //             <Button onPress={handlePresentModalPress}>
-  //               <Text style={{ fontSize: 16, color: '#fff' }}>
-  //                 Confirmar Depósito
-  //               </Text>
-  //             </Button>
-  //           </ContentButton>
-  //         </Content>
-  //       </BottomSheetView>
-  //     </BottomSheetModal>
-  //   </BottomSheetModalProvider>
-  // </LinearGradient>
+ 

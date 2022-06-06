@@ -12,7 +12,7 @@ import BottomSheet, {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
-import {Eye, Gear} from 'phosphor-react-native';
+import {Eye, Gear, XCircle} from 'phosphor-react-native';
 import {
   Container,
   ContainerInformation,
@@ -28,12 +28,17 @@ import {
   RightViewTop,
   ButtonConf,
   CenterHead,
-  Content,
 } from './style';
+import {Content} from '../Deposit/style';
 import LinearGradient from 'react-native-linear-gradient';
 import BoxElement from '../../../components/BoxElement/Index';
 import {CardTransations} from '../../../components/CardTransations';
+
+import {ContentButton} from '../Deposit/style';
+import {ButtonClose} from '../Details/style';
+
 import AuthenticationContext from '../../../context/Authentication';
+
 
 const Y_SIZE = Dimensions.get('window').height;
 
@@ -86,6 +91,7 @@ const Transations = [
 ];
 
 const DashBoard: React.FC = () => {
+  const [title, setTitle] = React.useState('');
   const navigation = useNavigation();
   const globalContext = useContext(AuthenticationContext);
   // ref
@@ -93,11 +99,17 @@ const DashBoard: React.FC = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   const initialSnapPoints = useMemo(() => ['65%', 'CONTENT_HEIGHT'], []);
+  const snapPoints = useMemo(() => ['65%', '90%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
+
+  const handleCloseModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.close();
+  }, []);
+
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
@@ -105,9 +117,6 @@ const DashBoard: React.FC = () => {
   const handleSheetChange = useCallback(index => {
     console.log('handleSheetChange', index);
   }, []);
-
-  // variables
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
 
   const {
     animatedHandleHeight,
@@ -152,19 +161,19 @@ const DashBoard: React.FC = () => {
         </TopContent>
 
         <BottomSheet
-          style={{backgroundColor: 'rgba(255, 255, 255, 0.8)'}}
           ref={bottomSheetRef}
           snapPoints={animatedSnapPoints}
           onChange={handleSheetChange}
           handleHeight={animatedHandleHeight}
           contentHeight={animatedContentHeight}
-          animationConfigs={animationConfigs}>
+          animationConfigs={animationConfigs}
+          enablePanDownToClose>
           <LinearGradient
             colors={['rgba(207, 207, 207, 0)', 'rgba(207, 207, 207, 0.26)']}
             style={{borderRadius: 10}}
             start={{x: 0.0, y: 0.0}}
             end={{x: 0.0, y: 1.0}}>
-            <BottomSheetDraggableView onLayout={handleContentLayout}>
+            <BottomSheetView onLayout={handleContentLayout}>
               <ContainerInformation>
                 <TopInf>
                   <LeftView>
@@ -177,17 +186,18 @@ const DashBoard: React.FC = () => {
                       type="Pagamentos"
                       amount={230}
                       bar={0.2}
-                      onPress={() =>
-                        navigation.navigate('Details' as never, {type: 'Pagamentos'})
-                      }
+                      onPress={() => {
+                        setTitle('Pagamentos'), handlePresentModalPress();
+                      }}
+
                     />
                     <BoxElement
                       type="Transferências"
                       amount={500}
                       bar={0.2}
-                      onPress={() =>
-                        navigation.navigate('Details', {type: 'Transferências'})
-                      }
+                      onPress={() => {
+                        setTitle('Transferências'), handlePresentModalPress();
+                      }}
                     />
                   </LeftView>
                   <RightView>
@@ -195,17 +205,17 @@ const DashBoard: React.FC = () => {
                       type="Depósitos"
                       amount={2930}
                       bar={0.6}
-                      onPress={() =>
-                        navigation.navigate('Details', {type: 'Depósitos'})
-                      }
+                      onPress={() => {
+                        setTitle('Depósitos'), handlePresentModalPress();
+                      }}
                     />
                     <BoxElement
                       type="Outros"
                       amount={309}
                       bar={0.3}
-                      onPress={() =>
-                        navigation.navigate('Details', {type: 'Outros'})
-                      }
+                      onPress={() => {
+                        setTitle('Outros'), handlePresentModalPress();
+                      }}
                     />
                   </RightView>
                 </SectionTop>
@@ -214,43 +224,41 @@ const DashBoard: React.FC = () => {
                     <Title>Recentes</Title>
                   </LeftView>
                 </TopInf>
-                <Content>
-                  <FlatList
-                    scrollEnabled={true}
-                    data={Transations}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={item => item.id}
-                    renderItem={({item}) => (
-                      <CardTransations
-                        data={item}
-                        onPress={() => navigation.navigate('Informations', {item})}
-                      />
-                    )}
-                  />
-                </Content>
+                {/* <Content> */}
+                <FlatList
+                  scrollEnabled={true}
+                  data={Transations}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={item => item.id}
+                  renderItem={({item}) => (
+                    <CardTransations
+                      data={item}
+                      onPress={() =>
+                        navigation.navigate('Informations', {item})
+                      }
+                    />
+                  )}
+                />
+                {/* </Content> */}
               </ContainerInformation>
-            </BottomSheetDraggableView>
+            </BottomSheetView>
           </LinearGradient>
         </BottomSheet>
 
-        {/* <BottomSheetModalProvider>
+        <BottomSheetModalProvider>
           <BottomSheetModal
             ref={bottomSheetModalRef}
             index={1}
             snapPoints={snapPoints}
             onChange={handleSheetChanges}>
-            <BottomSheetDraggableView onLayout={handleContentLayout}>
+            <BottomSheetView style={{flex: 1}}>
               <LinearGradient
                 colors={['rgba(207, 207, 207, 0.2)', 'rgba(207, 207, 207, 0)']}
-                style={{borderRadius: 20, marginHorizontal: 2}}
+                style={{borderRadius: 20, marginHorizontal: 2, flex: 1}}
                 start={{x: 0.0, y: 0.0}}
                 end={{x: 0.0, y: 1.0}}>
-                <ContainerInformation>
-                  <TopInf>
-                    <LeftView>
-                      <Title>Transferencias</Title>
-                    </LeftView>
-                  </TopInf>
+                <Content>
+                  <Title>{title}</Title>
                   <BottomSheetFlatList
                     data={Transations}
                     showsVerticalScrollIndicator={false}
@@ -262,11 +270,18 @@ const DashBoard: React.FC = () => {
                       />
                     )}
                   />
-                </ContainerInformation>
+                </Content>
+                <Content>
+                  <ContentButton>
+                    <ButtonClose onPress={handleCloseModalPress}>
+                      <XCircle size={48} color={'#fff'}></XCircle>
+                    </ButtonClose>
+                  </ContentButton>
+                </Content>
               </LinearGradient>
-            </BottomSheetDraggableView>
+            </BottomSheetView>
           </BottomSheetModal>
-        </BottomSheetModalProvider> */}
+        </BottomSheetModalProvider>
       </Container>
     </LinearGradient>
   );
