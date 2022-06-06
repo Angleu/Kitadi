@@ -51,11 +51,9 @@ export const TitleTop = styled.Text`
 `;
 
 export const LabelBank = styled.Text`
-  margin-top: 20px;
-
-  font-size: 18px;
+  margin-top: 10px;
+  font-size: 16px;
   color: #1d5c63;
-  font-weight: bold;
 `;
 export const ContentBank = styled.View`
   width: 100%;
@@ -64,7 +62,7 @@ export const Pressable = styled.TouchableOpacity``;
 
 export const SubmitButton = styled.TouchableOpacity`
   width: 100%;
-  height: 200px;
+  height: 30%;
   align-items: center;
   justify-content: center;
   border: 2px solid rgba(113, 126, 149, 0.1);
@@ -78,7 +76,7 @@ export const ContentButton = styled.View`
   width: 100%;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 
 `;
 

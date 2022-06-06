@@ -68,10 +68,7 @@ export const CardDeposit = () => {
       label: 'EUR',
       value: 'EUR',
     },
-    {
-      label: 'AOA',
-      value: 'AOA',
-    },
+    
   ];
 
   const validationContext = useContext(ValidationContext);
