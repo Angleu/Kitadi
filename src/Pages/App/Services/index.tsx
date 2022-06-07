@@ -29,7 +29,7 @@ const Services = () => {
           <RowServices
             icon="Transfer"
             title="Transferir"
-            onPress={() => navigation.navigate('CardDeposit')}
+            onPress={() => navigation.navigate('Transfer')}
           />
           <RowServices
             icon="Withdraw"
@@ -44,7 +44,7 @@ const Services = () => {
           <RowServices
             icon="TPA"
             title="TPA"
-            onPress={() => navigation.navigate('CardDeposit')}
+            onPress={() => navigation.navigate('TPA')}
           />
         </TopContentTitle>
       </Container>

@@ -82,7 +82,9 @@ export const BankSection = () => {
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
+
   const validationContext = useContext(ValidationContext);
+
   function handleSubmit() {
     handleClosePress();
     validationContext.setTitleError('Éxito');
@@ -168,7 +170,11 @@ export const BankSection = () => {
             </Content>
             <Content>
               <ContentButton>
-                <Button onPress={handleClosePress} text="Cancelar" outline={true} />
+                <Button
+                  onPress={handleClosePress}
+                  text="Cancelar"
+                  outline={true}
+                />
 
                 <Button
                   onPress={handleSubmit}

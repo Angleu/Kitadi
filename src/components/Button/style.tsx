@@ -12,7 +12,7 @@ export const Container = styled.TouchableOpacity<IButton>`
     /* padding: 18px 0px; */
     border-radius: 10px;
     border: 1px solid #1D5C63;
-    /* margin-top: 10px; */
+    margin-top: 10px;
     justify-content: center;
 `
 
