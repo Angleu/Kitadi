@@ -1,8 +1,3 @@
-
-import React, {useState, useCallback, useMemo, useRef,useContext} from 'react';
-import {ButtonBack} from '../../../Dashboard/style';
-import {Clipboard} from 'react-native';
-
 import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { ButtonBack } from '../../../Dashboard/style';
 import { Clipboard, View } from 'react-native';
@@ -27,8 +22,6 @@ import RNPickerSelect from 'react-native-picker-select';
 import { ArrowCircleLeft, FilePdf } from 'phosphor-react-native';
 import InputLayout from '../../../../../components/InputLayout';
 
-import {Text} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import ValidationContext from '../../../../../context/Validation';
 
 import { useNavigation } from '@react-navigation/native';
@@ -149,7 +142,6 @@ export const BankSection = () => {
           <Button outline={false} text="Continual" onPress={() => setOpen(true)} />
         </ContentButton>
 
-      </Container>
       <BottomSheetModalProvider>
         <BottomSheetModal
           ref={bottomSheetModalRef}
@@ -185,8 +177,6 @@ export const BankSection = () => {
           </BottomSheetView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
-    </LinearGradient>
-
       </ContainerA>
      
     </>
