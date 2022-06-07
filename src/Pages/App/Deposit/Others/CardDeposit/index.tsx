@@ -19,6 +19,7 @@ import {
   ViewCoin,
   ViewCvv,
   ViewDateEx,
+  ContentRow,
 } from '../../style';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -47,7 +48,7 @@ export const CardDeposit = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['25%', '70%'], []);
+  const snapPoints = useMemo(() => ['25%', '80%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -68,10 +69,7 @@ export const CardDeposit = () => {
       label: 'EUR',
       value: 'EUR',
     },
-    
   ];
-
- 
 
   const validationContext = useContext(ValidationContext);
   function handleSubmit() {
@@ -95,7 +93,8 @@ export const CardDeposit = () => {
         style={{
           fontSize: 16,
           color: 'rgba(113, 126, 149, 1)',
-          fontWeight: '400',marginBottom:68
+          fontWeight: '400',
+          marginBottom: 68,
         }}>
         Insira os dados para o carregamento da sua conta
       </Text>
@@ -130,7 +129,7 @@ export const CardDeposit = () => {
             />
           </ViewCoin>
         </RowInput>
-        <LabelBank>Número do Cartão</LabelBank>
+        {/* <LabelBank>Número do Cartão</LabelBank>
         <InputLayout
           placeholder=""
           value={numCard}
@@ -153,7 +152,7 @@ export const CardDeposit = () => {
               onChange={(text: React.SetStateAction<string>) => setCvv(text)}
             />
           </ViewCvv>
-        </RowInput>
+        </RowInput> */}
       </ContentBank>
       <ContentButton>
         <Button onPress={handlePresentModalPress}>
@@ -176,17 +175,23 @@ export const CardDeposit = () => {
                   placeholder=""
                   value={domiciliation}
                   editable={false}></InputLayout>
-                <LabelBank>Montante</LabelBank>
-                <InputLayout
-                  placeholder=""
-                  value={amount}
-                  editable={false}></InputLayout>
-                <LabelBank>Moeda</LabelBank>
-                <InputLayout
-                  placeholder=""
-                  value={coin}
-                  editable={false}></InputLayout>
-                <LabelBank>Taxa</LabelBank>
+                <ContentRow>
+                  <View style={{width: '82%',marginRight:12}}>
+                    <LabelBank>Montante</LabelBank>
+                    <InputLayout
+                      placeholder=""
+                      value={amount}
+                      editable={false}></InputLayout>
+                  </View>
+                  <View style={{width: '16%'}} >
+                    <LabelBank>Moeda</LabelBank>
+                    <InputLayout
+                      placeholder=""
+                      value={coin}
+                      editable={false}></InputLayout>
+                  </View>
+                </ContentRow>
+                  <LabelBank>Taxa</LabelBank>
                 <InputLayout
                   placeholder=""
                   value={fee}

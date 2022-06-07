@@ -36,11 +36,11 @@ const Services = () => {
             title="Levantamento"
             onPress={() => navigation.navigate('CardDeposit')}
           />
-          <RowServices
+          {/* <RowServices
             icon="CreditCard"
             title="Cartão digital"
             onPress={() => navigation.navigate('CardDeposit')}
-          />
+          /> */}
           <RowServices
             icon="TPA"
             title="TPA"

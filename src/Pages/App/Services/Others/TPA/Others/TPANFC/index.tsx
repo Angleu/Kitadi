@@ -37,9 +37,16 @@ export const TPANFC = () => {
 
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const bottomSheetModalRef_2 = useRef<BottomSheetModal>(null);
+  const handlePresentModalPress2 = useCallback(() => {
+    bottomSheetModalRef_2.current?.present();
+  }, []);
+  const handleClosePress2 = useCallback(() => {
+    bottomSheetModalRef_2.current!.close();
+  }, []);
 
   // variables
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const snapPoints = useMemo(() => ['25%', '60%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -57,6 +64,11 @@ export const TPANFC = () => {
     validationContext.setInformation('Depósito Realizado');
     validationContext.setIsVisible(true);
   }
+  function handleSubmit2() {
+    handleClosePress2();
+    handlePresentModalPress();
+  }
+
 
   const onSuccess = useCallback(() => {
     handlePresentModalPress();
@@ -128,11 +140,56 @@ export const TPANFC = () => {
           </ViewCoin>
         </ContentRow>
         <Button
-          onPress={handlePresentModalPress}
+          onPress={handlePresentModalPress2}
           text="Confirmar Pedido"
           outline={false}
         />
       </ContentBank>
+
+      <BottomSheetModalProvider>
+        <BottomSheetModal
+          ref={bottomSheetModalRef_2}
+          index={1}
+          snapPoints={snapPoints} handleIndicatorStyle={{display:'none'}}>
+          <BottomSheetView style={{flex: 1,justifyContent:'center',alignContent:'center'}} >
+            <Content>
+              <TitleTop>DADOS DO DEPÓSITO</TitleTop>
+              <ContentBank>
+                <LabelBank>Proprietário</LabelBank>
+                <InputLayout
+                  placeholder=""
+                  value={domiciliation}
+                  editable={false}></InputLayout>
+                <LabelBank>Montante</LabelBank>
+                <InputLayout
+                  placeholder=""
+                  value={amount}
+                  editable={false}></InputLayout>
+                <LabelBank>Moeda</LabelBank>
+                <InputLayout
+                  placeholder=""
+                  value={coin}
+                  editable={false}></InputLayout>
+              </ContentBank>
+            </Content>
+            <Content>
+              <ContentButton>
+                <Button
+                  onPress={handleClosePress2}
+                  text="Cancelar"
+                  outline={true}
+                />
+
+                <Button
+                  onPress={handleSubmit2}
+                  text="Confirmar Pedido"
+                  outline={false}
+                />
+              </ContentButton>
+            </Content>
+          </BottomSheetView>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
       <BottomSheetModalProvider>
         <BottomSheetModal
           ref={bottomSheetModalRef}

@@ -77,7 +77,7 @@ export const TPA = () => {
       <LabelBank style={{textAlign: 'center', marginBottom: 10}}>
         Terminal de pagamento no Smartphone
       </LabelBank>
-      <Image style={{width:'10%', height:'10%',alignSelf:'center'}} source={require('../../../../../assets/Topup-Payment.png')} />
+      <Image style={{width:'15%', height:'15%',alignSelf:'center'}} source={require('../../../../../assets/Topup-Payment.png')} />
       <LabelBank style={{textAlign: 'center', marginBottom: 50}}>
         Com este terminal é possivél usar os seu telefone como um TPA para
         receber pagamentos
