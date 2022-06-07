@@ -107,10 +107,10 @@ const Details = ({route}) => {
     <LinearGradient
       start={{x: 0.0, y: 0.3}}
       end={{x: 0, y: 0.0}}
-      style={{flex: 1}}
+      style={{flex: 1,justifyContent:'center'}}
       colors={['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.9)']}>
-      <Container>
-        <TopContent>
+      <Container >
+        <TopContent >
           <RightViewTop>
             <ButtonConf>
               <Gear size={32} color={'#fff'} weight="fill" />

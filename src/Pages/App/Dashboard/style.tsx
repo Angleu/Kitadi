@@ -11,6 +11,12 @@ export const Container = styled.View`
   /* justify-content: space-between; */
   /* padding: 40px 24px; */
 `;
+export const ContainerA = styled.View`
+  width: 100%;
+  flex: 1;
+  padding: 24px;
+  align-content: center;
+`;
 
 export const ImageTop = styled.Image`
   position: absolute;

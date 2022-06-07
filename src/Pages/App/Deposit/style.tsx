@@ -75,8 +75,10 @@ export const ContentButton = styled.View`
   width: 100%;
   justify-content: flex-end;
   align-items: center;
+
   padding: 10px 0px;
   /* margin-bottom: 30px; */
+
 
 `;
 

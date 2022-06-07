@@ -10,8 +10,9 @@ import {
 import {ButtonBack} from '../../../Dashboard/style';
 import {ArrowCircleLeft} from 'phosphor-react-native';
 
-import {Container} from '../../../Deposit/style';
+import {Container, Pressable, View} from '../../../Deposit/style';
 import {RowServices} from '../../../../../components/RowServices';
+import { ContainerTop } from '../../../Deposit/Others/BankSection/style';
 
 export const Payment = () => {
   const navigation = useNavigation();
@@ -20,33 +21,34 @@ export const Payment = () => {
     <>
       <Container>
         <TopContentTitle>
-          <TopContentTitle>
-            <ContentRow>
-              <ButtonBack onPress={() => navigation.goBack()}>
-                <ArrowCircleLeft size={42} color={'#000'} />
-              </ButtonBack>
-              <CenterTitleTop>
-                <TitleTop>Pagamentos</TitleTop>
-              </CenterTitleTop>
-            </ContentRow>
-          </TopContentTitle>
+        <ContainerTop >
+        <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <ArrowCircleLeft size={42} color={'#000'} />
+        </Pressable>
+        <View style={{flex: 1,alignSelf:'center'}}>
+          <TitleTop style={{alignSelf:'center'}} >Pagamentos</TitleTop>
+        </View>
+      </ContainerTop>
 
           
           <RowServices
             icon="QrCode"
             title="QrCode"
-            onPress={() => navigation.navigate('Payment')}
+            onPress={() => navigation.navigate('QrCodePayment')}
           />
           
           <RowServices
             icon="CreditCard"
             title="NFC"
-            onPress={() => navigation.navigate('CardDeposit')}
+            onPress={() => navigation.navigate('NFCPayment')}
           />
           <RowServices
             icon="TPA"
             title="TPA"
-            onPress={() => navigation.navigate('CardDeposit')}
+            onPress={() => navigation.navigate('TPAPayment')}
           />
         </TopContentTitle>
       </Container>

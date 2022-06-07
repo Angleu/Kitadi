@@ -1,7 +1,14 @@
-import React, {useCallback, useContext, useMemo, useRef} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import {Dimensions} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {ScrollView, FlatList} from 'react-native-gesture-handler';
+import {Modalize} from 'react-native-modalize';
 
 import BottomSheet, {
   BottomSheetView,
@@ -12,7 +19,13 @@ import BottomSheet, {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
-import {Eye, Gear, UserCircleGear, Wallet, XCircle} from 'phosphor-react-native';
+import {
+  Eye,
+  Gear,
+  UserCircleGear,
+  Wallet,
+  XCircle,
+} from 'phosphor-react-native';
 import {
   Container,
   ContainerInformation,
@@ -94,8 +107,18 @@ const Transations = [
 const DashBoard: React.FC = () => {
   const [title, setTitle] = React.useState('');
   const navigation = useNavigation();
+
   const globalContext = useContext(AuthenticationContext);
   // ref
+  const modalizeRef = useRef<Modalize>(null);
+  const onOpen = () => {
+    modalizeRef.current?.open();
+  };
+
+  useEffect(() => {
+    onOpen();
+  }, []);
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -105,6 +128,10 @@ const DashBoard: React.FC = () => {
   // callbacks
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
+  }, []);
+
+  const handleRefresh = useCallback(() => {
+    console.log('handleRefresh');
   }, []);
 
   const handleCloseModalPress = useCallback(() => {
@@ -175,13 +202,15 @@ const DashBoard: React.FC = () => {
           handleHeight={animatedHandleHeight}
           contentHeight={animatedContentHeight}
           animationConfigs={animationConfigs}
-          enablePanDownToClose>
+          enableContentPanningGesture={true}
+          enableHandlePanningGesture={true}
+          handleIndicatorStyle={{display: 'none'}}>
           <LinearGradient
             colors={['rgba(207, 207, 207, 0)', 'rgba(207, 207, 207, 0.26)']}
-            style={{borderRadius: 10}}
+            style={{borderRadius: 10, flex: 1}}
             start={{x: 0.0, y: 0.0}}
             end={{x: 0.0, y: 1.0}}>
-            <BottomSheetView onLayout={handleContentLayout}>
+            <BottomSheetView onLayout={handleContentLayout} style={{flex: 1}}>
               <ContainerInformation>
                 <TopInf>
                   <LeftView>
@@ -231,22 +260,23 @@ const DashBoard: React.FC = () => {
                     <Title>Recentes</Title>
                   </LeftView>
                 </TopInf>
-                {/* <Content> */}
-                <FlatList
-                  scrollEnabled={true}
-                  data={Transations}
-                  showsVerticalScrollIndicator={false}
-                  keyExtractor={item => item.id}
-                  renderItem={({item}) => (
-                    <CardTransations
-                      data={item}
-                      onPress={() =>
-                        navigation.navigate('Informations', {item})
-                      }
-                    />
-                  )}
-                />
-                {/* </Content> */}
+                <Content style={{height:250}}>
+                  <FlatList
+                  onRefresh={handleRefresh}
+                    // scrollEnabled={true}
+                    data={Transations}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={item => item.id}
+                    renderItem={({item}) => (
+                      <CardTransations
+                        data={item}
+                        onPress={() =>
+                          navigation.navigate('Informations', {item})
+                        }
+                      />
+                    )}
+                  />
+                </Content>
               </ContainerInformation>
             </BottomSheetView>
           </LinearGradient>
@@ -257,7 +287,8 @@ const DashBoard: React.FC = () => {
             ref={bottomSheetModalRef}
             index={1}
             snapPoints={snapPoints}
-            onChange={handleSheetChanges}>
+            onChange={handleSheetChanges}
+            handleIndicatorStyle={{display: 'none'}}>
             <BottomSheetView style={{flex: 1}}>
               <LinearGradient
                 colors={['rgba(207, 207, 207, 0.2)', 'rgba(207, 207, 207, 0)']}
@@ -266,20 +297,22 @@ const DashBoard: React.FC = () => {
                 end={{x: 0.0, y: 1.0}}>
                 <Content>
                   <Title>{title}</Title>
+
                   <BottomSheetFlatList
+                    onRefresh={handleRefresh}
                     data={Transations}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={item => item.id}
                     renderItem={({item}) => (
                       <CardTransations
                         data={item}
-                        onPress={() => navigation.navigate('Details', {item})}
+                        onPress={() => navigation.navigate('Informations', {item})}
                       />
                     )}
                   />
                 </Content>
                 <Content>
-                  <ContentButton>
+                  <ContentButton style={{marginBottom:30}}>
                     <ButtonClose onPress={handleCloseModalPress}>
                       <XCircle size={48} color={'#fff'}></XCircle>
                     </ButtonClose>

@@ -19,6 +19,8 @@ import { Text} from 'react-native';
 
 import Export from '../../../assets/Export.png'
 import Import from '../../../assets/DownloadSimple.png'
+import { ContainerTop } from '../Deposit/Others/BankSection/style';
+import { Pressable, TitleTop, View } from '../Deposit/style';
 
 
 const Informations = ({route}) => {
@@ -28,21 +30,20 @@ const Informations = ({route}) => {
     <LinearGradient
       start={{x: 0.0, y: 0.3}}
       end={{x: 0, y: 0.0}}
-      style={{flex: 1}}
+      style={{flex: 1,justifyContent: 'center', alignItems: 'center'}}
       colors={['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.3)']}>
-      <Container>
-        <TopContentTitle>
-          <ContentRow>
-            <LeftViewTop>
-              <ButtonBack onPress={() => navigation.goBack()}>
-                <ArrowCircleLeft size={42} color="#2D676D" />
-              </ButtonBack>
-            </LeftViewTop>
-            <CenterTitle>
-              <Title>{route.params.item.type}</Title>
-            </CenterTitle>
-          </ContentRow>
-        </TopContentTitle>
+      <Container  >
+      <ContainerTop style={{width:'96%'}}>
+        <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <ArrowCircleLeft size={42} color={'#000'} />
+        </Pressable>
+        <View style={{flex: 1}}>
+          <TitleTop>{route.params.item.type}</TitleTop>
+        </View>
+      </ContainerTop>
         <Information>
           <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: '15%',textAlign:'center'}}>
             # {route.params.item.id}

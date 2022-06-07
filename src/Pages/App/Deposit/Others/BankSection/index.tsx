@@ -147,7 +147,9 @@ export const BankSection = () => {
   const handleSheetChanges = useCallback((index: number) => {
     // console.log('handleSheetChanges', index);
   }, []);
+
   const validationContext = useContext(ValidationContext);
+
   async function handleSubmit() {
     processContext.setIsLoad(true);
     processContext.setIsVisible(true);
@@ -182,6 +184,7 @@ export const BankSection = () => {
       validationContext.setInformation('Problema a realizar o deposito');
       validationContext.setIsVisible(true);
     }
+
   }
 
   return (
@@ -269,7 +272,11 @@ export const BankSection = () => {
             </Content>
             <Content>
               <ContentButton>
-                <Button onPress={handleClosePress} text="Cancelar" outline={true} />
+                <Button
+                  onPress={handleClosePress}
+                  text="Cancelar"
+                  outline={true}
+                />
 
                 <Button
                   onPress={handleSubmit}
