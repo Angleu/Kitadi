@@ -1,6 +1,6 @@
-import React, {useState, useCallback, useMemo, useRef, useContext} from 'react';
-import {ButtonBack} from '../../../Dashboard/style';
-import {Clipboard, View} from 'react-native';
+import React, { useState, useCallback, useMemo, useRef, useContext } from 'react';
+import { ButtonBack } from '../../../Dashboard/style';
+import { Clipboard, View } from 'react-native';
 
 import {
   TopContentTitle,
@@ -19,10 +19,9 @@ import DocumentPicker, {
 } from 'react-native-document-picker';
 import LinearGradient from 'react-native-linear-gradient';
 import RNPickerSelect from 'react-native-picker-select';
-import {ArrowCircleLeft, FilePdf} from 'phosphor-react-native';
+import { ArrowCircleLeft, CheckCircle, FilePdf } from 'phosphor-react-native';
 import InputLayout from '../../../../../components/InputLayout';
 
-import {useNavigation} from '@react-navigation/native';
 import ValidationContext from '../../../../../context/Validation';
 
 import {
@@ -35,19 +34,29 @@ import {
   ContainerA,
   ContainerInput,
   ContainerTop,
+  PressSubmitContainer,
   Text,
 } from './style';
 import Button from '../../../../../components/Button';
-import Sheet from 'react-modal-sheet';
+import { useNavigation } from '@react-navigation/native';
+import APICompravativoServices from '../../../../../services/APICompravativoServices';
+import TransationServices from '../../../../../services/TransationServices';
+import AccountServices from '../../../../../services/AccountServices';
+import AuthenticationContext from '../../../../../context/Authentication';
+import AsyncStorage from '@react-native-community/async-storage'
 
 export const BankSection = () => {
   const navigation = useNavigation();
+  // const [file, setFile] = useState<object>({});
   const [iban, setIban] = React.useState('');
   const [domiciliation, setDomiciliation] = React.useState('');
   const [amount, setAmount] = React.useState('');
   const [coin, setCoin] = React.useState('');
   const [fee, setFee] = React.useState('');
   const [isOpen, setOpen] = useState(false);
+  const [data, setData] = useState({});
+  const [ficheiro, setFicheiro] = useState<DocumentPickerResponse | null>(null);
+
 
   const Bank = [
     {
@@ -55,7 +64,10 @@ export const BankSection = () => {
       value: ' AO06 0040 0000 9863 0896 1017 2',
     },
   ];
-  const [document, setDocument] = useState<DocumentPickerResponse>();
+
+
+  const context = useContext(AuthenticationContext);
+  const processContext = useContext(ValidationContext);
   const copyToClipboard = () => {
     Clipboard.setString(iban);
   };
@@ -64,32 +76,115 @@ export const BankSection = () => {
       type: [DocumentPicker.types.pdf],
       allowMultiSelection: false,
     });
-    setDocument(pickFile[0]);
-  };
+    setFicheiro(pickFile[0]);
+    processContext.setIsLoad(true);
+    processContext.setIsVisible(true);
+    try {
+      const service = new APICompravativoServices();
+      const file = await service.execute(pickFile[0] as DocumentPickerResponse);
+
+      if (!file.destinatario)
+        return;
+
+      if (file.destinatario === "ANGLEU ZUA SILVA") {
+        let amount = String(file.montante).split(' ')[0];
+        let valor: string = "";
+        for (let i = 0; i < amount.length; i++) {
+          if (amount[i] !== '.' && amount[i] !== '-')
+            valor += amount[i]
+        }
+        processContext.setIsVisible(false);
+        processContext.setIsLoad(false);
+        handlePresentModalPress({
+          amount: Number.parseFloat(valor),
+          coin: "AOA",
+          description: "Deposito por transferência Bancaria",
+          to_user: context.account.id_account,
+        })
+      }
+    } catch {
+      processContext.setIsVisible(false);
+      processContext.setIsLoad(false);
+      validationContext.setTitleError('Erro');
+      validationContext.setInformation('Verifique o seu comprovativo');
+      processContext.setIsVisible(true);
+      return
+    }
+  }
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['25%', '70%'], []);
+  const snapPoints = useMemo(() => ['25%', '85%'], []);
 
   // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
+  const handlePresentModalPress = useCallback(async (data) => {
+    try {
+      if (data instanceof Object) {
+        setDomiciliation(context.user.name);
+        setAmount(data?.amount.toString())
+        setCoin(data?.coin as string)
+        setFee('0,00%')
+        processContext.setIsVisible(false);
+        processContext.setIsLoad(false);
+        bottomSheetModalRef.current?.present();
+        return
+      }
+    } catch (erro) {
+      processContext.setIsVisible(false);
+      processContext.setIsLoad(false);
+      validationContext.setTitleError('Erro');
+      validationContext.setInformation('Verifique o seu comprovativo');
+      processContext.setIsVisible(true);
+      return
+
+    }
+
   }, []);
   const handleClosePress = useCallback(() => {
     bottomSheetModalRef.current!.close();
   }, []);
   const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
+    // console.log('handleSheetChanges', index);
   }, []);
 
   const validationContext = useContext(ValidationContext);
 
-  function handleSubmit() {
-    handleClosePress();
-    validationContext.setTitleError('Éxito');
-    validationContext.setInformation('Depósito Realizado');
-    validationContext.setIsVisible(true);
+  async function handleSubmit() {
+    processContext.setIsLoad(true);
+    processContext.setIsVisible(true);
+    const serviceTransation = new TransationServices();
+
+    try {
+      const result = await serviceTransation.deposit({
+        amount: Number.parseFloat(amount),
+        coin: "AOA",
+        description: "",
+        to_user: context.account.id_account as string
+      })
+      console.log(result)
+      if (result instanceof Object) {
+        const responseAccount = await new AccountServices().executeOne(context.user.id_user as string)
+        if (responseAccount instanceof Object) {
+          context.setAccount(responseAccount);
+          await AsyncStorage.setItem('@RNAuth:account', JSON.stringify(responseAccount));
+        }
+        processContext.setIsVisible(false);
+        processContext.setIsLoad(false);
+        handleClosePress();
+        validationContext.setTitleError('Éxito');
+        validationContext.setInformation('Depósito Realizado');
+        validationContext.setIsVisible(true);
+        navigation.navigate({ name: "auth" } as never);
+      }
+    } catch {
+      processContext.setIsVisible(false);
+      processContext.setIsLoad(false);
+      validationContext.setTitleError('Erro');
+      validationContext.setInformation('Problema a realizar o deposito');
+      validationContext.setIsVisible(true);
+    }
+
   }
 
   return (
@@ -101,7 +196,7 @@ export const BankSection = () => {
           }}>
           <ArrowCircleLeft size={42} color={'#000'} />
         </Pressable>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <TitleTop>CARREGAMENTO DE CONTA</TitleTop>
         </View>
       </ContainerTop>
@@ -110,7 +205,7 @@ export const BankSection = () => {
         <ContentBank>
           <LabelBank>Selecione o banco de origem</LabelBank>
           <RNPickerSelect
-            placeholder={{label: 'Selecione o Banco', value: null}}
+            placeholder={{ label: 'Selecione o Banco', value: null }}
             onValueChange={value => setIban(value)}
             items={Bank}
             style={{
@@ -121,7 +216,7 @@ export const BankSection = () => {
               inputAndroid: {
                 color: '#333',
               },
-              placeholder: {color: '#000'},
+              placeholder: { color: '#000' },
             }}
           />
           <Pressable onPress={copyToClipboard}>
@@ -133,39 +228,46 @@ export const BankSection = () => {
               editable={false}
             />
           </Pressable>
-          <LabelBank>Carregue o comprovativo de transferência</LabelBank>
-          <SubmitButton onPress={submitPDF}>
-            <FilePdf size={82} color="#cacaca" />
-          </SubmitButton>
+          {
+            (ficheiro) ?
+              (
+                <PressSubmitContainer onLongPress={() => setFicheiro(null)}>
+                  <CheckCircle size={72} color="#cacaca" />
+                  <TitleTop>Comprovativo Carregado</TitleTop>
+                  <Text>Pressiona para remover o comprovativo</Text>
+                </PressSubmitContainer>
+
+              ) :
+              (
+                <>
+                  <LabelBank>Carregue o comprovativo de transferência</LabelBank>
+                  <SubmitButton onPress={submitPDF}>
+                    <FilePdf size={82} color="#cacaca" />
+                  </SubmitButton>
+                </>
+              )
+          }
+
         </ContentBank>
       </ContainerInput>
-      <Content>
-        <ContentButton>
-          <Button
-            outline={false}
-            text="Continuar"
-            onPress={handlePresentModalPress}
-          />
-        </ContentButton>
-      </Content>
       <BottomSheetModalProvider>
         <BottomSheetModal
           ref={bottomSheetModalRef}
           index={1}
           snapPoints={snapPoints}
           onChange={handleSheetChanges}>
-          <BottomSheetView style={{flex: 1}}>
+          <BottomSheetView style={{ flex: 1, paddingVertical: 10 }}>
             <Content>
               <TitleTop>DADOS DO DEPÓSITO</TitleTop>
               <ContentBank>
                 <LabelBank>Proprietário</LabelBank>
-                <InputLayout placeholder="" value={domiciliation}></InputLayout>
+                <InputLayout placeholder="" value={domiciliation} editable={false}></InputLayout>
                 <LabelBank>Montante</LabelBank>
-                <InputLayout placeholder="" value={amount}></InputLayout>
+                <InputLayout placeholder="" value={amount} editable={false}></InputLayout>
                 <LabelBank>Moeda</LabelBank>
-                <InputLayout placeholder="" value={coin}></InputLayout>
+                <InputLayout placeholder="" value={coin} editable={false}></InputLayout>
                 <LabelBank>Taxa</LabelBank>
-                <InputLayout placeholder="" value={fee}></InputLayout>
+                <InputLayout placeholder="" value={fee} editable={false}></InputLayout>
               </ContentBank>
             </Content>
             <Content>
@@ -187,5 +289,7 @@ export const BankSection = () => {
         </BottomSheetModal>
       </BottomSheetModalProvider>
     </ContainerA>
+
+
   );
 };

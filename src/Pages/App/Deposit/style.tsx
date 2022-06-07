@@ -47,7 +47,6 @@ export const TitleTop = styled.Text`
   font-weight: bold;
   text-align: center;
   align-self: center;
-  align-self: center;
 `;
 
 export const LabelBank = styled.Text`
@@ -62,7 +61,7 @@ export const Pressable = styled.TouchableOpacity``;
 
 export const SubmitButton = styled.TouchableOpacity`
   width: 100%;
-  height: 30%;
+  height: 40%;
   align-items: center;
   justify-content: center;
   border: 2px solid rgba(113, 126, 149, 0.1);
@@ -76,7 +75,10 @@ export const ContentButton = styled.View`
   width: 100%;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: 30px;
+
+  padding: 10px 0px;
+  /* margin-bottom: 30px; */
+
 
 `;
 

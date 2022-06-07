@@ -7,9 +7,8 @@ interface IButton {
 
 export const Container = styled.TouchableOpacity<IButton>`
     width: 100%;
-    height: 40px;
     background-color:${(props) => props.outline ? '#fff' : '#1D5C63'};
-    /* padding: 18px 0px; */
+    padding: 18px 0px;
     border-radius: 10px;
     border: 1px solid #1D5C63;
     margin-top: 10px;

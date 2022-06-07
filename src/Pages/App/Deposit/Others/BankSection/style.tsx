@@ -20,8 +20,8 @@ export const ContainerTop = styled.View`
   /* flex: 1; */
   flex-direction: row;
   align-items: center;
-  margin-top: 40px;
-  margin-bottom: 68px;
+  margin-top: 50px;
+  margin-bottom: 40px;
 `;
 
 export const ContainerInput = styled.View`
@@ -35,5 +35,17 @@ export const Text = styled.Text`
   text-align: center;
   /* margin-top : 30px; */
   color: #000;
-  margin-bottom: 68px;
+  margin-bottom: 40px;
 `;
+
+export const PressSubmitContainer = styled.Pressable`
+  width: 100%;
+  height: 40%;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid rgba(113, 126, 149, 0.1);
+  border-radius: 10px;
+  margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.284);
+  padding: 20px;
+`
