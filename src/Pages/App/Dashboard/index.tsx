@@ -12,7 +12,7 @@ import BottomSheet, {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
-import {Eye, Gear, XCircle} from 'phosphor-react-native';
+import {Eye, Gear, UserCircleGear, Wallet, XCircle} from 'phosphor-react-native';
 import {
   Container,
   ContainerInformation,
@@ -26,8 +26,10 @@ import {
   ButtonVer,
   Detail,
   RightViewTop,
+  LeftViewTop,
   ButtonConf,
   CenterHead,
+  ContentRow,
 } from './style';
 import {Content} from '../Deposit/style';
 import LinearGradient from 'react-native-linear-gradient';
@@ -38,7 +40,6 @@ import {ContentButton} from '../Deposit/style';
 import {ButtonClose} from '../Details/style';
 
 import AuthenticationContext from '../../../context/Authentication';
-
 
 const Y_SIZE = Dimensions.get('window').height;
 
@@ -130,7 +131,7 @@ const DashBoard: React.FC = () => {
     overshootClamping: true,
     restDisplacementThreshold: 0.1,
     restSpeedThreshold: 0.1,
-    stiffness: 500
+    stiffness: 500,
   });
 
   return (
@@ -141,11 +142,18 @@ const DashBoard: React.FC = () => {
       colors={['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.9)']}>
       <Container>
         <TopContent>
-          <RightViewTop>
-            <ButtonConf>
-              <Gear size={32} color={'#fff'} weight="fill" />
-            </ButtonConf>
-          </RightViewTop>
+          <ContentRow>
+            <RightViewTop>
+              <ButtonConf>
+                <UserCircleGear size={32} color={'#fff'} weight="fill" />
+              </ButtonConf>
+            </RightViewTop>
+            <LeftViewTop>
+              <ButtonConf>
+                <Wallet size={32} color={'#fff'} weight="fill" />
+              </ButtonConf>
+            </LeftViewTop>
+          </ContentRow>
           <CenterHead>
             <AmountTop>AOA {globalContext.account.balance}</AmountTop>
             <ButtonVer>
@@ -189,7 +197,6 @@ const DashBoard: React.FC = () => {
                       onPress={() => {
                         setTitle('Pagamentos'), handlePresentModalPress();
                       }}
-
                     />
                     <BoxElement
                       type="Transferências"

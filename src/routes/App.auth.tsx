@@ -3,7 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DashBoard from '../Pages/App/Dashboard';
 import Deposit from '../Pages/App/Deposit';
 import Services from '../Pages/App/Services';
-import Account from '../Pages/App/Account';
+import Map from '../Pages/App/Map';
+import { QrCode } from '../Pages/App/Services/Others/Payment/Others/QrCode';
 
 
 import * as Icons from 'phosphor-react-native';
@@ -60,11 +61,11 @@ const AppRoute: React.FC = () => {
           options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <Icons.UserCircleGear weight='fill' size={38} color={focused ? '#1D5C63' : '#8F8F8F'} />
+              <Icons.NavigationArrow weight='fill' size={38} color={focused ? '#1D5C63' : '#8F8F8F'} />
             ),
           }}
-          name="Conta"
-          component={Account}
+          name="Mapa"
+          component={Map}
         />
       </Tap.Navigator>
   );

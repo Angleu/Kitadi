@@ -18,7 +18,7 @@ import {
   ViewDeposit,
   ViewCoin,
   ViewCvv,
-  ViewDateEx
+  ViewDateEx,
 } from '../../style';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -63,14 +63,12 @@ export const CardDeposit = () => {
     {
       label: 'USD',
       value: 'USD',
-    },{
+    },
+    {
       label: 'EUR',
       value: 'EUR',
     },
-    {
-      label: 'AOA',
-      value: 'AOA',
-    },
+    
   ];
 
   const validationContext = useContext(ValidationContext);
@@ -81,100 +79,86 @@ export const CardDeposit = () => {
     validationContext.setIsVisible(true);
   }
 
-
   return (
-    <LinearGradient
-      start={{x: 0.0, y: 0.7}}
-      end={{x: 0, y: 0.0}}
-      style={{flex: 1}}
-      colors={['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.3)']}>
-      <Container>
-        <TopContentTitle>
-          <ButtonBack onPress={() => navigation.goBack()}>
-            <ArrowCircleLeft size={42} color={'#1d5c63'} />
-          </ButtonBack>
-          <CenterTitleTop>
-            <TitleTop>Cartão de Débito/Crédito</TitleTop>
-          </CenterTitleTop>
-        </TopContentTitle>
-        <Text
-          style={{
-            fontSize: 16,
-            color: 'rgba(113, 126, 149, 1)',
-            fontWeight: '400',
-          }}>
-          Insira os dados para o carregamento da sua conta
-        </Text>
-        <ContentBank>
-          <RowInput>
-            <ViewDeposit>
-              <LabelBank>Montante a adicionar</LabelBank>
+    <Container>
+      <TopContentTitle>
+        <ButtonBack onPress={() => navigation.goBack()}>
+          <ArrowCircleLeft size={42} color={'#000'} />
+        </ButtonBack>
+        <CenterTitleTop>
+          <TitleTop>Cartão de Débito/Crédito</TitleTop>
+        </CenterTitleTop>
+      </TopContentTitle>
+      <Text
+        style={{
+          fontSize: 16,
+          color: 'rgba(113, 126, 149, 1)',
+          fontWeight: '400',marginBottom:68
+        }}>
+        Insira os dados para o carregamento da sua conta
+      </Text>
+      <ContentBank>
+        <RowInput>
+          <ViewDeposit>
+            <LabelBank>Montante a adicionar</LabelBank>
 
-              <InputLayout
-                placeholder=""
-                value={amount}
-                onChange={(text: React.SetStateAction<string>) =>
-                  setAmount(text)
-                }
-              />
-            </ViewDeposit>
-            <ViewCoin>
-              <LabelBank>Moeda</LabelBank>
+            <InputLayout
+              placeholder=""
+              value={amount}
+              onChange={(text: React.SetStateAction<string>) => setAmount(text)}
+            />
+          </ViewDeposit>
+          <ViewCoin>
+            <LabelBank>Moeda</LabelBank>
 
-              <RNPickerSelect
-                placeholder={{label: 'Moeda', value: null}}
-                onValueChange={value => setCoin(value)}
-                items={Coin}
-                style={{
-                  viewContainer: {
-                    borderBottomColor: '#888',
-                    borderBottomWidth: 2,
-                    marginTop:-6
-                  },
-                  inputAndroid: {
-                    color: '#333',
-                  },
-                }}
-              />
-            </ViewCoin>
-          </RowInput>
-          <LabelBank>Número do Cartão</LabelBank>
-          <InputLayout
-            placeholder=""
-            value={numCard}
-            onChange={(text: React.SetStateAction<string>) => setNumCard(text)}
-          />
-          <RowInput>
-            <ViewDateEx>
-              <LabelBank>Data de Expiração</LabelBank>
+            <RNPickerSelect
+              placeholder={{label: 'Moeda', value: null}}
+              onValueChange={value => setCoin(value)}
+              items={Coin}
+              style={{
+                viewContainer: {
+                  borderBottomColor: '#888',
+                  borderBottomWidth: 2,
+                  marginTop: -6,
+                },
+                inputAndroid: {
+                  color: '#333',
+                },
+              }}
+            />
+          </ViewCoin>
+        </RowInput>
+        <LabelBank>Número do Cartão</LabelBank>
+        <InputLayout
+          placeholder=""
+          value={numCard}
+          onChange={(text: React.SetStateAction<string>) => setNumCard(text)}
+        />
+        <RowInput>
+          <ViewDateEx>
+            <LabelBank>Data de Expiração</LabelBank>
+            <InputLayout
+              placeholder=""
+              value={dateEx}
+              onChange={(text: React.SetStateAction<string>) => setDateEx(text)}
+            />
+          </ViewDateEx>
+          <ViewCvv>
+            <LabelBank>CVV/CVV2</LabelBank>
+            <InputLayout
+              placeholder=""
+              value={cvv}
+              onChange={(text: React.SetStateAction<string>) => setCvv(text)}
+            />
+          </ViewCvv>
+        </RowInput>
+      </ContentBank>
+      <ContentButton>
+        <Button onPress={handlePresentModalPress}>
+          <Text style={{fontSize: 16, color: '#fff'}}>Confirmar</Text>
+        </Button>
+      </ContentButton>
 
-              <InputLayout
-                placeholder=""
-                value={dateEx}
-                onChange={(text: React.SetStateAction<string>) =>
-                  setDateEx(text)
-                }
-              />
-            </ViewDateEx>
-            <ViewCvv>
-              <LabelBank>CVV/CVV2</LabelBank>
-
-              <InputLayout
-                placeholder=""
-                value={cvv}
-                onChange={(text: React.SetStateAction<string>) =>
-                  setCvv(text)
-                }
-              />
-            </ViewCvv>
-          </RowInput>
-        </ContentBank>
-        <ContentButton>
-          <Button onPress={handlePresentModalPress}>
-            <Text style={{fontSize: 16, color: '#fff'}}>Confirmar</Text>
-          </Button>
-        </ContentButton>
-      </Container>
       <BottomSheetModalProvider>
         <BottomSheetModal
           ref={bottomSheetModalRef}
@@ -186,13 +170,25 @@ export const CardDeposit = () => {
               <TitleTop>DADOS DO DEPÓSITO</TitleTop>
               <ContentBank>
                 <LabelBank>Proprietário</LabelBank>
-                <InputLayout placeholder="" value={domiciliation} editable={false}></InputLayout>
+                <InputLayout
+                  placeholder=""
+                  value={domiciliation}
+                  editable={false}></InputLayout>
                 <LabelBank>Montante</LabelBank>
-                <InputLayout placeholder="" value={amount} editable={false}></InputLayout>
+                <InputLayout
+                  placeholder=""
+                  value={amount}
+                  editable={false}></InputLayout>
                 <LabelBank>Moeda</LabelBank>
-                <InputLayout placeholder="" value={coin} editable={false}></InputLayout>
+                <InputLayout
+                  placeholder=""
+                  value={coin}
+                  editable={false}></InputLayout>
                 <LabelBank>Taxa</LabelBank>
-                <InputLayout placeholder="" value={fee} editable={false}></InputLayout>
+                <InputLayout
+                  placeholder=""
+                  value={fee}
+                  editable={false}></InputLayout>
               </ContentBank>
             </Content>
             <Content>
@@ -210,6 +206,6 @@ export const CardDeposit = () => {
           </BottomSheetView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
-    </LinearGradient>
+    </Container>
   );
 };

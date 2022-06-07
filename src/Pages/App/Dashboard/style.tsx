@@ -6,9 +6,10 @@ export const Content = styled.View`
 
 export const Container = styled.View`
   flex: 1;
+  width: 100%;
   align-items: center;
-  justify-content: space-between;
-  padding: 40px 24px;
+  /* justify-content: space-between; */
+  /* padding: 40px 24px; */
 `;
 
 export const ImageTop = styled.Image`
@@ -21,7 +22,7 @@ export const ImageBottom = styled.Image`
   left: 0;
 `;
 export const ContainerInformation = styled.View`
-  width: 100%;
+  width: 94%;
   margin-top: 20px;
   margin-left: 3%;
 `;
@@ -85,12 +86,23 @@ export const LeftView = styled.View`
   flex-basis: 0%;
 `;
 
-export const LeftViewTop = styled.View``;
-
+export const LeftViewTop = styled.View`
+  margin-right: 20px;
+  margin-top: 30px;
+  align-items: center;
+  flex: 0.1;
+`;
+export const RightViewTop = styled.View`
+  margin-left: 20px;
+  margin-top: 30px;
+  align-items: center;
+  flex: 0.1;
+`;
 export const ContentRow = styled.View`
   flex-direction: row;
   text-align: center;
   width: 100%;
+  justify-content: space-between;
 `;
 
 export const CenterTitle = styled.View`
@@ -100,6 +112,8 @@ export const CenterTitle = styled.View`
 export const CenterTitleTop = styled.View`
   width: 100%;
   align-items: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
 `;
 
 export const Information = styled.View`
@@ -111,10 +125,7 @@ export const RightView = styled.View`
   align-items: flex-end;
   flex: 1;
 `;
-export const RightViewTop = styled.View`
-  align-items: flex-end;
-  flex: 0.1;
-`;
+
 export const ButtonConf = styled.TouchableOpacity`
   border: 1px solid #fff;
   border-radius: 30px;
@@ -122,7 +133,7 @@ export const ButtonConf = styled.TouchableOpacity`
 `;
 export const ButtonBack = styled.TouchableOpacity`
   border-radius: 30px;
-  flex: 1;
+
   /* padding: 5px; */
   /* align-self: flex-start; */
 `;
@@ -142,8 +153,8 @@ export const FlatList = styled.FlatList`
 `;
 
 export const Button = styled.TouchableOpacity`
-margin-left: 60px;
-margin-right: 60px;
+  margin-left: 60px;
+  margin-right: 60px;
 `;
 
 export const Icon = styled.Image`

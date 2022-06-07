@@ -1,19 +1,54 @@
 import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
-import {Container} from '../Dashboard/style';
+import {
+  
+  TitleTop,
+  CenterTitleTop,
+  TopContentTitle,
+} from '../Dashboard/style';
+
+import { Container } from '../Deposit/style';
+import {RowServices} from '../../../components/RowServices';
 
 const Services = () => {
   const navigation = useNavigation();
 
   return (
-    <LinearGradient
-      start={{x: 0.0, y: 0.3}}
-      end={{x: 0, y: 0.0}}
-      style={{flex: 1}}
-      colors={['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.3)']}>
-      <Container></Container>
-    </LinearGradient>
+    <>
+      <Container>
+        <TopContentTitle>
+          <CenterTitleTop>
+            <TitleTop>Serviços</TitleTop>
+          </CenterTitleTop>
+
+          <RowServices
+            icon="Bank"
+            title="Pagamento"
+            onPress={() => navigation.navigate('Payment')}
+          />
+          <RowServices
+            icon="Transfer"
+            title="Transferir"
+            onPress={() => navigation.navigate('CardDeposit')}
+          />
+          <RowServices
+            icon="Withdraw"
+            title="Levantamento"
+            onPress={() => navigation.navigate('CardDeposit')}
+          />
+          <RowServices
+            icon="CreditCard"
+            title="Cartão digital"
+            onPress={() => navigation.navigate('CardDeposit')}
+          />
+          <RowServices
+            icon="TPA"
+            title="TPA"
+            onPress={() => navigation.navigate('CardDeposit')}
+          />
+        </TopContentTitle>
+      </Container>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
 import {Container} from '../Dashboard/style';
 
-const Account = () => {
+const Map = () => {
   const navigation = useNavigation();
 
   return (
@@ -17,4 +17,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Map;

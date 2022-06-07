@@ -19,7 +19,9 @@ export const ImageBottom = styled.Image`
     left: 0;
 
 `
-export const ContainerInformation = styled.View`
+export const ContainerInformation = styled.KeyboardAvoidingView.attrs({
+    behavior: 'padding',
+})`
     flex: 1;
     width: 100%;
     margin-top: 16px;

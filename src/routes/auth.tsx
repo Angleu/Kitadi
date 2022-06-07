@@ -12,6 +12,8 @@ import CadastroConta from '../Pages/Auth/CadastroConta';
 import CadastroEndereco from '../Pages/Auth/CadastroEndereco';
 import { BankSection } from '../Pages/App/Deposit/Others/BankSection';
 import { CardDeposit } from '../Pages/App/Deposit/Others/CardDeposit';
+import { Payment } from '../Pages/App/Services/Others/Payment';
+// import { QrCode } from '../Pages/App/Services/Others/Payment/Others/QrCode';
 import AppRoute from './App.auth';
 import AuthenticationContext from '../context/Authentication';
 
@@ -36,6 +38,8 @@ export default function Auth() {
                 <Stack.Screen name="Informations" component={Informations} />
                 <Stack.Screen name="BankSection" component={BankSection} />
                 <Stack.Screen name="CardDeposit" component={CardDeposit} />
+                <Stack.Screen name="Payment" component={Payment} />
+                {/* <Stack.Screen name="QrCode" component={QrCode} /> */}
                 <Stack.Screen name="auth" component={AppRoute} />
 
             </Stack.Navigator>
