@@ -3,5 +3,5 @@
         "Cadastro",
         "logar"
     ],
-    "java.configuration.updateBuildConfiguration": "disabled"
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
