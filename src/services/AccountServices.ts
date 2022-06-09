@@ -56,7 +56,8 @@ export default class AccountServices {
         return new Error('Account does not exist');
 
     }
-    async deposit(id_login: string, amount: number, currency: string) {
+
+    async depositByCard(id_login: string, amount: number, currency: string) {
         const response = await (await axios.post(`/api/card/payment/${id_login}`, {
             amount,
             currency
