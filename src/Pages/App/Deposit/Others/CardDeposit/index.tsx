@@ -21,8 +21,8 @@ import {
   ViewDateEx,
 } from '../../style';
 
-import LinearGradient from 'react-native-linear-gradient';
 import RNPickerSelect from 'react-native-picker-select';
+
 import { ArrowCircleLeft, Coin } from 'phosphor-react-native';
 import InputLayout from '../../../../../components/InputLayout';
 import { SafeAreaView, Text } from 'react-native';
@@ -32,17 +32,22 @@ import {
   BottomSheetModalProvider,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import { WebView } from 'react-native-webview';
+import { WebView, WebViewNavigation } from 'react-native-webview';
 import AuthenticationContext from '../../../../../context/Authentication';
 import ValidationContext from '../../../../../context/Validation';
+import AccountServices from '../../../../../services/AccountServices';
+import TransationServices from '../../../../../services/TransationServices';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export const CardDeposit = () => {
   const navigation = useNavigation();
   const [domiciliation, setDomiciliation] = React.useState('');
   const [amount, setAmount] = React.useState('');
-  const [coin, setCoin] = React.useState('');
   const [fee, setFee] = React.useState('');
+  const [moeda, setMoeda] = useState('');
   const [uri, setUri] = useState('');
+
+  const [coin, setCoin] = useState('');
 
   const globalContext = useContext(AuthenticationContext)
   const validaationContext = useContext(ValidationContext)
@@ -55,8 +60,9 @@ export const CardDeposit = () => {
   const snapPoints = useMemo(() => ['25%', '70%'], []);
 
   // callbacks
-  const handlePresentModalPress = useCallback(() => {
+  const handlePresentModalPress = function () {
     setDomiciliation(globalContext.user.name)
+    console.log(coin)
     if (coin === '' || amount === '') {
       validaationContext.setIsLoad(false);
       validaationContext.setTitleError("Erro no Cadastro");
@@ -65,18 +71,71 @@ export const CardDeposit = () => {
     } else {
       bottomSheetModalRef.current?.present();
     }
-  }, []);
+  }
   const handleClosePress = useCallback(() => {
     bottomSheetModalRef.current!.close();
   }, []);
   const handleSheetChanges = useCallback((index: number) => {
-    
+
   }, []);
 
   const validationContext = useContext(ValidationContext);
-  function handleSubmit() {
-    setUri('https://www.google.com/')
-    handleClosePress();
+  async function viewNavigator(event: WebViewNavigation) {
+    if (event.url === 'http://localhost:3000/sucess.html') {
+      const response = await new TransationServices().deposit({
+        amount: parseFloat(amount) * 500,
+        coin: 'AOA',
+        to_user: globalContext.account.id_account as string,
+        description: 'Deposito Visa Card'
+      })
+
+      if (response instanceof Object) {
+        const responseAccount = await new AccountServices().executeOne(globalContext.user.id_user as string)
+        if (responseAccount instanceof Object) {
+          globalContext.setAccount(responseAccount);
+          await AsyncStorage.setItem('@RNAuth:account', JSON.stringify(responseAccount));
+        }
+        setUri('')
+        validationContext.setIsVisible(false);
+        validationContext.setIsLoad(false);
+        validationContext.setTitleError('Éxito');
+        validationContext.setInformation('Depósito Realizado');
+        validationContext.setIsVisible(true);
+        return
+      }else {
+        setUri('')
+        validaationContext.setIsLoad(false);
+        validationContext.setTitleError('Erro');
+        validationContext.setInformation('Falha na realização do Deposito');
+        validationContext.setIsVisible(true);
+        return
+      }
+    } else if (event.url === 'http://localhost:3000/cancel.html') {
+      setUri('')
+      validaationContext.setIsLoad(false);
+      validationContext.setTitleError('Erro');
+      validationContext.setInformation('Falha na realização do Deposito');
+      validationContext.setIsVisible(true);
+      return
+    }
+  }
+  async function handleSubmit() {
+    try {
+      validaationContext.setIsLoad(true);
+      validationContext.setIsVisible(true);
+      const service = new AccountServices();
+      const result = await service.depositByCard(globalContext.login.id_login, parseFloat(amount+"00"), coin);
+      validationContext.setIsVisible(false);
+      validaationContext.setIsLoad(false);
+      setUri(result.url);
+    } catch (error) {
+      console.log(error)
+      validaationContext.setIsLoad(false);
+      validationContext.setTitleError('Erro');
+      validationContext.setInformation('Falha na realização do Deposito');
+      validationContext.setIsVisible(true);
+    }
+    // handleClosePress();
     // validationContext.setTitleError('Éxito');
     // validationContext.setInformation('Depósito Realizado');
     // validationContext.setIsVisible(true);
@@ -102,39 +161,30 @@ export const CardDeposit = () => {
         Insira os dados para o carregamento da sua conta
       </Text>
       <ContentBank>
-        <RowInput>
-          <ViewDeposit>
-            <LabelBank>Montante a adicionar</LabelBank>
+        <ViewDeposit>
+          <LabelBank>Montante a adicionar</LabelBank>
 
-            <InputLayout
-              placeholder=""
-              value={amount}
-              onChange={(text: React.SetStateAction<string>) => setAmount(text)}
-            />
-          </ViewDeposit>
-          <ViewCoin>
-            <LabelBank>Moeda</LabelBank>
-            <RNPickerSelect 
-          //  style={{
-          //   viewContainer: {
-          //     borderBottomColor: '#888',
-          //     borderBottomWidth: 2,
-          //     // marginTop: -6,
-          //   },
-          //   inputAndroid: {
-          //     color: '#333',
-          //   }
-          // }}
-              value={coin}
-              onValueChange={(value) => setCoin(value)}
-              items={[
-                { label: 'USD', value: 'USD' },
-                { label: 'EUR', value: 'EUR' },
-              ]}
-              placeholder="Moeda"
-            />
-          </ViewCoin>
-        </RowInput>
+          <InputLayout
+            placeholder=""
+            value={amount}
+            onChange={(text: React.SetStateAction<string>) => setAmount(text)}
+          />
+        </ViewDeposit>
+        <LabelBank>Moeda</LabelBank>
+        <RNPickerSelect
+          style={{
+            viewContainer: {
+              borderBottomColor: '#333',
+              borderBottomWidth: 2,
+            }
+          }}
+          onValueChange={(value) => setCoin(value)}
+          items={[
+            { label: 'USD', value: 'USD' },
+            { label: 'EUR', value: 'EUR' },
+          ]}
+          value={coin}
+        />
       </ContentBank>
       <ContentButton>
         <Button onPress={handlePresentModalPress}>
@@ -193,8 +243,8 @@ export const CardDeposit = () => {
       :
       (
 
-        <WebView style={{ zIndex: 999, backgroundColor: '#fff' }} source={{ uri: uri }} 
-          onNavigationStateChange ={(event) => console.log(event.url)}
+        <WebView style={{ zIndex: 999, backgroundColor: '#fff' }} source={{ uri: uri }}
+          onNavigationStateChange={viewNavigator}
         />
       )
 
