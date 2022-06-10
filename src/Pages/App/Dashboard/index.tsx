@@ -212,7 +212,7 @@ const DashBoard: React.FC = () => {
             style={{ borderRadius: 24, flex: 1 }}
             start={{ x: 0.0, y: 0.0 }}
             end={{ x: 0.0, y: 1.0 }}>
-            <BottomSheetView style={{ flex: 1, padding: 16}}>
+            <BottomSheetView onLayout={handleContentLayout} style={{ flex: 1, padding: 16}}>
               <ContainerInformation>
                 <Title>Transaçōes</Title>
                 <SectionTop>
