@@ -28,16 +28,15 @@ export const ImageBottom = styled.Image`
   left: 0;
 `;
 export const ContainerInformation = styled.View`
-  width: 94%;
-  margin-top: 20px;
-  margin-left: 3%;
+  width: 100%;
+  background-color: #fff;
 `;
 
 export const Title = styled.Text`
   color: #1d5c63;
   font-size: 24px;
   font-weight: bold;
-  padding-top: 8px;
+  /* padding-top: 8px; */
 `;
 export const TitleTop = styled.Text`
   color: #1d5c63;
@@ -152,6 +151,7 @@ export const CenterHead = styled.View`
 export const SectionTop = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
+  margin-top: 16px;
 `;
 
 export const FlatList = styled.FlatList`

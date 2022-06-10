@@ -9,8 +9,6 @@ export const Container = styled.View`
 
 export const Content = styled.View`
   flex: 1;
-  margin-left: 20px;
-  margin-right: 20px;
 `;
 
 export const TopContentTitle = styled.View`

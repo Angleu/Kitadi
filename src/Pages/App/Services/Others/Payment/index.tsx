@@ -1,5 +1,5 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import {
   TitleTop,
   CenterTitleTop,
@@ -7,12 +7,13 @@ import {
   ContentRow,
   Title,
 } from '../../../Dashboard/style';
-import {ButtonBack} from '../../../Dashboard/style';
-import {ArrowCircleLeft} from 'phosphor-react-native';
+import { ButtonBack } from '../../../Dashboard/style';
+import { ArrowCircleLeft } from 'phosphor-react-native';
 
-import {Container, Pressable, View} from '../../../Deposit/style';
-import {RowServices} from '../../../../../components/RowServices';
+import { Container, Pressable, View } from '../../../Deposit/style';
+import { RowServices } from '../../../../../components/RowServices';
 import { ContainerTop } from '../../../Deposit/Others/BankSection/style';
+import { AvailableAmount } from '../../../../../components/AvailableAmount';
 
 export const Payment = () => {
   const navigation = useNavigation();
@@ -21,25 +22,24 @@ export const Payment = () => {
     <>
       <Container>
         <TopContentTitle>
-        <ContainerTop >
-        <Pressable
-          onPress={() => {
-            navigation.goBack();
-          }}>
-          <ArrowCircleLeft size={42} color={'#000'} />
-        </Pressable>
-        <View style={{flex: 1,alignSelf:'center'}}>
-          <TitleTop style={{alignSelf:'center'}} >Pagamentos</TitleTop>
-        </View>
-      </ContainerTop>
-
-          
+          <ContainerTop >
+            <Pressable
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <ArrowCircleLeft size={42} color={'#000'} />
+            </Pressable>
+            <View style={{ flex: 1, alignSelf: 'center' }}>
+              <TitleTop style={{ alignSelf: 'center' }} >Pagamentos</TitleTop>
+            </View>
+          </ContainerTop>
+          <AvailableAmount />
           <RowServices
             icon="QrCode"
             title="QrCode"
             onPress={() => navigation.navigate('QrCodePayment')}
           />
-          
+
           <RowServices
             icon="CreditCard"
             title="NFC"
