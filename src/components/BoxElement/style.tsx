@@ -66,6 +66,8 @@ export const Box = styled.TouchableOpacity`
   border-radius: 10px;
   /* margin: 0px 2px; */
   padding: 5px;
+  /* align-items: center;
+  justify-content: center; */
 `;
 
 export const SectionTop = styled.View`

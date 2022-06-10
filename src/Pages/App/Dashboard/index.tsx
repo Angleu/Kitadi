@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react';
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -106,6 +107,7 @@ const Transations = [
 
 const DashBoard: React.FC = () => {
   const [title, setTitle] = React.useState('');
+  const [show, setShow] = useState(false)
   const navigation = useNavigation();
 
   const globalContext = useContext(AuthenticationContext);
@@ -182,15 +184,15 @@ const DashBoard: React.FC = () => {
             </LeftViewTop>
           </ContentRow>
           <CenterHead>
-            <AmountTop>AOA {globalContext.account.balance}</AmountTop>
-            <ButtonVer>
+            <AmountTop>AOA {(show)? globalContext.account.balance: "******"}</AmountTop>
+            <ButtonVer onPress={() => setShow(!show)}>
               <Eye
                 size={28}
                 weight={'fill'}
                 color={'#fff'}
                 style={{ paddingLeft: 10, display: 'flex' }}
               />
-              <Detail>Mostrar</Detail>
+              <Detail>{(show) ? "Ocultar" :"Mostrar"}</Detail>
             </ButtonVer>
           </CenterHead>
         </TopContent>
@@ -204,14 +206,13 @@ const DashBoard: React.FC = () => {
           animationConfigs={animationConfigs}
           enableContentPanningGesture={true}
           enableHandlePanningGesture={true}
-          
           handleIndicatorStyle={{ display: 'none' }}>
           <LinearGradient
             colors={['rgba(207, 207, 207, 0)', 'rgba(207, 207, 207, 0.26)']}
             style={{ borderRadius: 24, flex: 1 }}
             start={{ x: 0.0, y: 0.0 }}
             end={{ x: 0.0, y: 1.0 }}>
-            <BottomSheetView style={{ flex: 1, padding: 16, backgroundColor:'#fffc',}} >
+            <BottomSheetView style={{ flex: 1, padding: 16}}>
               <ContainerInformation>
                 <Title>Transaçōes</Title>
                 <SectionTop>
