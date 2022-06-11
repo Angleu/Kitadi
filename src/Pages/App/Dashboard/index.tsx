@@ -254,7 +254,7 @@ const DashBoard: React.FC = () => {
                     <Title>Recentes</Title>
                   </LeftView>
                 </TopInf>
-                <Content>
+                {/* <Content>
                   <FlatList
                     onRefresh={handleRefresh}
                     // scrollEnabled={true}
@@ -270,7 +270,7 @@ const DashBoard: React.FC = () => {
                       />
                     )}
                   />
-                </Content>
+                </Content> */}
               </ContainerInformation>
             </BottomSheetView>
           </LinearGradient>

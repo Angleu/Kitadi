@@ -69,4 +69,8 @@ export default class UserServices {
         if (response instanceof Object)
             return response;
     }
+    async executeOneByEmail(email: string): Promise<IUser | undefined> {
+        const response = await (await axios.get(`/login/user/${email}`)).data;
+        return response;
+    }
 }

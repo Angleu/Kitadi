@@ -66,8 +66,7 @@ export const Detail = styled.Text`
   color: #fff;
   text-align: center;
   font-size: 16px;
-  padding-top: 2px;
-  padding-left: 10px;
+  padding: 10px;
 `;
 export const TopContent = styled.View`
   flex: 0.3;

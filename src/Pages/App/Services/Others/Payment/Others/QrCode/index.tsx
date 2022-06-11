@@ -25,7 +25,7 @@ import ValidationContext from '../../../../../../../context/Validation';
 
 export const QrCodePayment = () => {
   const navigation = useNavigation();
-  const [iban, setIban] = React.useState('');
+  // const [iban, setIban] = React.useState('');
   const [domiciliation, setDomiciliation] = React.useState('');
   const [amount, setAmount] = React.useState('');
   const [coin, setCoin] = React.useState('');

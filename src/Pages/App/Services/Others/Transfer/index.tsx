@@ -1,6 +1,6 @@
-import React, {useCallback, useContext, useMemo, useRef} from 'react';
+import React, { useCallback, useContext, useMemo, useRef } from 'react';
 
-import {ContainerTop} from '../../../Deposit/Others/BankSection/style';
+import { ContainerTop } from '../../../Deposit/Others/BankSection/style';
 import {
   Content,
   ContentBank,
@@ -10,9 +10,9 @@ import {
   TitleTop,
   View,
 } from '../../../Deposit/style';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-import {ArrowCircleLeft} from 'phosphor-react-native';
+import { ArrowCircleLeft } from 'phosphor-react-native';
 
 import {
   BottomSheetModal,
@@ -22,7 +22,12 @@ import {
 import InputLayout from '../../../../../components/InputLayout';
 import Button from '../../../../../components/Button';
 import ValidationContext from '../../../../../context/Validation';
-import {ContainerA} from '../../../Dashboard/style';
+import { ContainerA } from '../../../Dashboard/style';
+import UserServices from '../../../../../services/UserServices';
+import TransationServices from '../../../../../services/TransationServices';
+import AuthenticationContext from '../../../../../context/Authentication';
+import AccountServices from '../../../../../services/AccountServices';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export const Transfer = () => {
   const navigation = useNavigation();
@@ -30,13 +35,15 @@ export const Transfer = () => {
   const [domiciliation, setDomiciliation] = React.useState('');
   const [amount, setAmount] = React.useState('');
   const [coin, setCoin] = React.useState('');
-  const [fee, setFee] = React.useState('');
+  const [fee, setFee] = React.useState('0,00%');
+
+  const globalContext = useContext(AuthenticationContext);
 
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['25%', '70%'], []);
+  const snapPoints = useMemo(() => ['25%', '90%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -48,16 +55,68 @@ export const Transfer = () => {
 
   const validationContext = useContext(ValidationContext);
 
-  function handleSubmit() {
-    handleClosePress();
-    validationContext.setTitleError('Éxito');
-    validationContext.setInformation('Depósito Realizado');
-    validationContext.setIsVisible(true);
+  async function handleSubmit() {
+    try {
+      validationContext.setIsLoad(true);
+      validationContext.setIsVisible(true);
+      const result = await new TransationServices().save({
+        amount: parseFloat(amount),
+        coin,
+        description: "Transferência Bancaria",
+        to_user: globalContext.account.id_account,
+        email: email,
+        type: "Transfer"
+
+      })
+      if (result instanceof Object) {
+        const responseAccount = await new AccountServices().executeOne(globalContext.user.id_user as string)
+        if (responseAccount instanceof Object) {
+          globalContext.setAccount(responseAccount);
+          await AsyncStorage.setItem('@RNAuth:account', JSON.stringify(responseAccount));
+        }
+      }
+      validationContext.setIsVisible(false);
+      validationContext.setIsLoad(false);
+      handleClosePress();
+      navigation.navigate({ name: "auth" } as never)
+      validationContext.setTitleError('Éxito');
+      validationContext.setInformation('Depósito Realizado');
+      validationContext.setIsVisible(true);
+    } catch {
+      validationContext.setIsLoad(false);
+      validationContext.setTitleError("Erro");
+      validationContext.setInformation("Email Invalido");
+      validationContext.setIsVisible(true);
+    }
+
   }
 
-  const onSuccess = useCallback(() => {
-    handlePresentModalPress();
-  }, []);
+  const onSuccess = async function () {
+    if (email === '' || amount === '') {
+      validationContext.setIsLoad(false);
+      validationContext.setTitleError("Erro");
+      validationContext.setInformation("Precisa preencher os campos em falta");
+      validationContext.setIsVisible(true);
+    } else {
+      try {
+        validationContext.setIsLoad(true);
+        validationContext.setIsVisible(true);
+        const result = await new UserServices().executeOneByEmail(email);
+        if (result instanceof Object) {
+          setDomiciliation(result.name);
+          validationContext.setIsVisible(false);
+          validationContext.setIsLoad(false);
+          handlePresentModalPress();
+        }
+      } catch {
+        validationContext.setIsLoad(false);
+        validationContext.setTitleError("Erro");
+        validationContext.setInformation("Email Invalido");
+        validationContext.setIsVisible(true);
+
+      }
+    }
+  }
 
   return (
     <ContainerA>
@@ -68,11 +127,11 @@ export const Transfer = () => {
           }}>
           <ArrowCircleLeft size={42} color={'#000'} />
         </Pressable>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <TitleTop>Transferir</TitleTop>
         </View>
       </ContainerTop>
-      <LabelBank style={{textAlign: 'center', marginBottom: 50}}>
+      <LabelBank style={{ textAlign: 'center', marginBottom: 50 }}>
         Informe os Dados do Beneficiário
       </LabelBank>
       <ContentBank>
@@ -80,17 +139,12 @@ export const Transfer = () => {
         <InputLayout
           placeholder=""
           value={email}
-          onChange={setEmail}></InputLayout>
-        <LabelBank>Beneficiário</LabelBank>
-        <InputLayout
-          placeholder=""
-          value={domiciliation}
-          onChange={setDomiciliation}></InputLayout>
+          onChange={setEmail} />
         <LabelBank>Montante</LabelBank>
         <InputLayout
           placeholder=""
           value={amount}
-          onChange={setAmount}></InputLayout>
+          onChange={setAmount} />
       </ContentBank>
       <Button onPress={onSuccess} text="Confirmar" outline={false} />
       <BottomSheetModalProvider>
@@ -98,7 +152,7 @@ export const Transfer = () => {
           ref={bottomSheetModalRef}
           index={1}
           snapPoints={snapPoints}>
-          <BottomSheetView style={{flex: 1}}>
+          <BottomSheetView style={{ flex: 1, padding: 24 }}>
             <Content>
               <TitleTop>DADOS DO DEPÓSITO</TitleTop>
               <ContentBank>

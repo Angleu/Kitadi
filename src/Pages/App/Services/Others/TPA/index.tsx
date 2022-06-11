@@ -1,6 +1,6 @@
-import React, {useCallback, useContext, useMemo, useRef} from 'react';
-import {ContainerA} from '../../../Dashboard/style';
-import {ContainerTop} from '../../../Deposit/Others/BankSection/style';
+import React, { useCallback, useContext, useMemo, useRef } from 'react';
+import { ContainerA } from '../../../Dashboard/style';
+import { ContainerTop } from '../../../Deposit/Others/BankSection/style';
 import {
   Content,
   ContentBank,
@@ -10,12 +10,12 @@ import {
   TitleTop,
   View,
 } from '../../../Deposit/style';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import {ArrowCircleLeft} from 'phosphor-react-native';
+import { ArrowCircleLeft } from 'phosphor-react-native';
 
-import {Image} from 'react-native';
-
+import { Image } from 'react-native';
+import LottieView from 'lottie-react-native';
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -24,7 +24,7 @@ import {
 import InputLayout from '../../../../../components/InputLayout';
 import Button from '../../../../../components/Button';
 import ValidationContext from '../../../../../context/Validation';
-import {RowServices} from '../../../../../components/RowServices';
+import { RowServices } from '../../../../../components/RowServices';
 
 export const TPA = () => {
   const navigation = useNavigation();
@@ -62,7 +62,7 @@ export const TPA = () => {
   }, []);
 
   return (
-    <ContainerA style={{alignContent: 'center'}}>
+    <ContainerA style={{ alignContent: 'center' }}>
       <ContainerTop>
         <Pressable
           onPress={() => {
@@ -70,15 +70,22 @@ export const TPA = () => {
           }}>
           <ArrowCircleLeft size={42} color={'#000'} />
         </Pressable>
-        <View style={{flex: 1}}>
-          <TitleTop>Terminal de Pagamento Automático</TitleTop>
+        <View style={{ flex: 1 }}>
+          <TitleTop>TPA</TitleTop>
         </View>
       </ContainerTop>
-      <LabelBank style={{textAlign: 'center', marginBottom: 10}}>
+      <LabelBank style={{ textAlign: 'center', marginBottom: 10 }}>
         Terminal de pagamento no Smartphone
       </LabelBank>
-      <Image style={{width:'15%', height:'15%',alignSelf:'center'}} source={require('../../../../../assets/Topup-Payment.png')} />
-      <LabelBank style={{textAlign: 'center', marginBottom: 50}}>
+      <LottieView source={require('../../../../../animation/86866-payment.json')} autoPlay 
+        style={{
+          width: 150,
+          alignSelf: 'center'
+        }}
+        speed={1.3}
+      />
+      {/* <Image style={{width:'15%', height:'15%',alignSelf:'center'}} source={require('../../../../../assets/Topup-Payment.png')} /> */}
+      <LabelBank style={{ textAlign: 'center', marginBottom: 50 }}>
         Com este terminal é possivél usar os seu telefone como um TPA para
         receber pagamentos
       </LabelBank>

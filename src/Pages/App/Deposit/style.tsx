@@ -50,9 +50,10 @@ export const TitleTop = styled.Text`
 export const LabelBank = styled.Text`
   margin-top: 10px;
   font-size: 16px;
-  color: #1d5c63;
+  color: #444;
 `;
 export const ContentBank = styled.View`
+  flex: 1;
   width: 100%;
 `;
 export const Pressable = styled.TouchableOpacity``;
