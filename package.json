@@ -23,6 +23,7 @@
     "framer-motion": "^6.3.10",
     "glob": "^7.2.0",
     "invariant": "^2.2.4",
+    "ios-deploy": "^1.11.4",
     "lottie-ios": "3.2.3",
     "lottie-react-native": "^5.1.2",
     "nanoid": "^3.3.4",

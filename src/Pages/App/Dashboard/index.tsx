@@ -18,6 +18,7 @@ import BottomSheet, {
   BottomSheetFlatList,
   BottomSheetModal,
   BottomSheetModalProvider,
+  BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import {
   Eye,
@@ -122,7 +123,7 @@ const DashBoard: React.FC = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const initialSnapPoints = useMemo(() => ['65%', 'CONTENT_HEIGHT'], []);
+  const initialSnapPoints = useMemo(() => ['65%', '100%'], []);
   const snapPoints = useMemo(() => ['65%', '90%'], []);
 
   // callbacks
@@ -207,16 +208,13 @@ const DashBoard: React.FC = () => {
           handleIndicatorStyle={{display: 'none'}}>
           <LinearGradient
             colors={['rgba(207, 207, 207, 0)', 'rgba(207, 207, 207, 0.26)']}
-            style={{borderRadius: 10, flex: 1}}
+            style={{borderRadius: 24, flex: 1}}
             start={{x: 0.0, y: 0.0}}
             end={{x: 0.0, y: 1.0}}>
-            <BottomSheetView onLayout={handleContentLayout} style={{flex: 1}}>
-              <ContainerInformation>
-                <TopInf>
-                  <LeftView>
-                    <Title>Transaçōes</Title>
-                  </LeftView>
-                </TopInf>
+            <BottomSheetView style={{flex: 1, padding: 16}}>
+              <ContainerInformation style={{flex: 1}}>
+                <Title>Transaçōes</Title>
+
                 <SectionTop>
                   <LeftView>
                     <BoxElement
@@ -255,29 +253,32 @@ const DashBoard: React.FC = () => {
                     />
                   </RightView>
                 </SectionTop>
-                <TopInf>
-                  <LeftView>
-                    <Title>Recentes</Title>
-                  </LeftView>
-                </TopInf>
-                <Content style={{height:250}}>
-                  <FlatList
-                  onRefresh={handleRefresh}
-                    // scrollEnabled={true}
-                    data={Transations}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={item => item.id}
-                    renderItem={({item}) => (
-                      <CardTransations
-                        data={item}
-                        onPress={() =>
-                          navigation.navigate('Informations', {item})
-                        }
-                      />
-                    )}
-                  />
-                </Content>
               </ContainerInformation>
+            </BottomSheetView>
+            <BottomSheetView style={{flex: 1, padding: 16}}>
+              <TopInf>
+                <LeftView>
+                  <Title>Recentes</Title>
+                </LeftView>
+              </TopInf>
+
+              <Content>
+                <FlatList
+                  onRefresh={handleRefresh}
+                  // scrollEnabled={true}
+                  data={Transations}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={item => item.id}
+                  renderItem={({item}) => (
+                    <CardTransations
+                      data={item}
+                      onPress={() =>
+                        navigation.navigate('Informations', {item})
+                      }
+                    />
+                  )}
+                />
+              </Content>
             </BottomSheetView>
           </LinearGradient>
         </BottomSheet>
@@ -306,13 +307,15 @@ const DashBoard: React.FC = () => {
                     renderItem={({item}) => (
                       <CardTransations
                         data={item}
-                        onPress={() => navigation.navigate('Informations', {item})}
+                        onPress={() =>
+                          navigation.navigate('Informations', {item})
+                        }
                       />
                     )}
                   />
                 </Content>
-                <Content>
-                  <ContentButton style={{marginBottom:30}}>
+                <Content style={{flex: 0.5}}>
+                  <ContentButton style={{marginBottom: 30}}>
                     <ButtonClose onPress={handleCloseModalPress}>
                       <XCircle size={48} color={'#fff'}></XCircle>
                     </ButtonClose>
