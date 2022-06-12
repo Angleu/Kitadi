@@ -13,12 +13,12 @@ import { Modalize } from 'react-native-modalize';
 
 import BottomSheet, {
   BottomSheetView,
-  BottomSheetDraggableView,
   useBottomSheetDynamicSnapPoints,
   useBottomSheetSpringConfigs,
   BottomSheetFlatList,
   BottomSheetModal,
   BottomSheetModalProvider,
+  BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import {
   Eye,
@@ -124,7 +124,7 @@ const DashBoard: React.FC = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const initialSnapPoints = useMemo(() => ['65%', 'CONTENT_HEIGHT'], []);
+  // const initialSnapPoints = useMemo(() => ['65%', 'CONTENT_HEIGHT'], []);
   const snapPoints = useMemo(() => ['65%', '90%'], []);
 
   // callbacks
@@ -148,12 +148,12 @@ const DashBoard: React.FC = () => {
     console.log('handleSheetChange', index);
   }, []);
 
-  const {
-    animatedHandleHeight,
-    animatedSnapPoints,
-    animatedContentHeight,
-    handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
+  // const {
+  //   animatedHandleHeight,
+  //   animatedSnapPoints,
+  //   animatedContentHeight,
+  //   handleContentLayout,
+  // } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
 
   const animationConfigs = useBottomSheetSpringConfigs({
     damping: 80,
@@ -184,7 +184,7 @@ const DashBoard: React.FC = () => {
             </LeftViewTop>
           </ContentRow>
           <CenterHead>
-            <AmountTop>AOA {(show)? globalContext.account.balance: "******"}</AmountTop>
+            <AmountTop>AOA {(show) ? globalContext.account.balance : "******"}</AmountTop>
             <ButtonVer onPress={() => setShow(!show)}>
               <Eye
                 size={28}
@@ -192,27 +192,33 @@ const DashBoard: React.FC = () => {
                 color={'#fff'}
                 style={{ paddingLeft: 10, display: 'flex' }}
               />
-              <Detail>{(show) ? "Ocultar" :"Mostrar"}</Detail>
+              <Detail>{(show) ? "Ocultar" : "Mostrar"}</Detail>
             </ButtonVer>
           </CenterHead>
         </TopContent>
 
         <BottomSheet
           ref={bottomSheetRef}
-          snapPoints={animatedSnapPoints}
+          // initialSnapIndex={1}
+          snapPoints={snapPoints}
           onChange={handleSheetChange}
-          handleHeight={animatedHandleHeight}
-          contentHeight={animatedContentHeight}
+          // handleHeight={animatedHandleHeight}
+          // contentHeight={animatedContentHeight}
           animationConfigs={animationConfigs}
           enableContentPanningGesture={true}
           enableHandlePanningGesture={true}
-          handleIndicatorStyle={{ display: 'none' }}>
+          handleIndicatorStyle={{ display: 'none' }}
+        >
+
           <LinearGradient
             colors={['rgba(207, 207, 207, 0)', 'rgba(207, 207, 207, 0.26)']}
             style={{ borderRadius: 24, flex: 1 }}
             start={{ x: 0.0, y: 0.0 }}
             end={{ x: 0.0, y: 1.0 }}>
-            <BottomSheetView onLayout={handleContentLayout} style={{ flex: 1, padding: 16}}>
+            <BottomSheetScrollView style={{ flex: 1}}
+              horizontal={false}
+              scrollsToTop={true}
+            >
               <ContainerInformation>
                 <Title>Transaçōes</Title>
                 <SectionTop>
@@ -249,11 +255,26 @@ const DashBoard: React.FC = () => {
                     }}
                   />
                 </SectionTop>
-                <TopInf>
-                  <LeftView>
-                    <Title>Recentes</Title>
-                  </LeftView>
-                </TopInf>
+                <Title>Recentes</Title>
+                <BottomSheetFlatList
+                  style={{
+                    flex: 1,
+                  }}
+                  data={Transations}
+                  onRefresh={handleRefresh}
+                  horizontal={false}
+                  numColumns={4}
+                  keyExtractor={item => item.id}
+                  renderItem={({ item }) => (
+                    <CardTransations
+                      data={item}
+                      onPress={() =>
+                        navigation.navigate('Informations', { item })
+                      }
+                    />
+                  )}
+
+                />
                 {/* <Content>
                   <FlatList
                     onRefresh={handleRefresh}
@@ -272,7 +293,7 @@ const DashBoard: React.FC = () => {
                   />
                 </Content> */}
               </ContainerInformation>
-            </BottomSheetView>
+            </BottomSheetScrollView>
           </LinearGradient>
         </BottomSheet>
 

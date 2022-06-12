@@ -4,9 +4,9 @@ export const Body = styled.TouchableOpacity`
   width: 100%;
   flex-direction: row;
   background-color: #fff;
-  border: 1px solid #fff;
+  border: 1px solid #444;
   border-radius: 10px;
-  height: 64px;
+  /* height: 64px; */
   margin-top: 24px;
   justify-content: space-between;
 `;

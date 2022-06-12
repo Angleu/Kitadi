@@ -30,13 +30,13 @@ export const ImageBottom = styled.Image`
 export const ContainerInformation = styled.View`
   width: 100%;
   background-color: #fff;
+  padding: 24px 16px;
 `;
 
 export const Title = styled.Text`
   color: #1d5c63;
   font-size: 24px;
   font-weight: bold;
-  /* padding-top: 8px; */
 `;
 export const TitleTop = styled.Text`
   color: #1d5c63;
@@ -61,6 +61,8 @@ export const ButtonVer = styled.TouchableOpacity`
   flex-direction: row;
   padding-left: 10px;
   padding-right: 10px;
+  align-items: center;
+  margin-top: 10px;
 `;
 export const Detail = styled.Text`
   color: #fff;

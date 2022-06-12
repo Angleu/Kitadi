@@ -19,7 +19,6 @@ type Props = {
 
 export const CardTransations = (data: Props) => {
   return (
-    <View>
       <Body onPress={data.onPress}>
         <Details>
           <Type>{data.data.type}</Type>
@@ -30,6 +29,5 @@ export const CardTransations = (data: Props) => {
         <Type />
         <Avatar source={{uri: data.data.avatar}}></Avatar>
       </Body>
-    </View>
   );
 };
