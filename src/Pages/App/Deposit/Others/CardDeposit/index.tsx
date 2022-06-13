@@ -57,7 +57,7 @@ export const CardDeposit = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['25%', '70%'], []);
+  const snapPoints = useMemo(() => ['25%', '90%'], []);
 
   // callbacks
   const handlePresentModalPress = function () {
@@ -102,7 +102,7 @@ export const CardDeposit = () => {
         validationContext.setInformation('Depósito Realizado');
         validationContext.setIsVisible(true);
         return
-      }else {
+      } else {
         setUri('')
         validaationContext.setIsLoad(false);
         validationContext.setTitleError('Erro');
@@ -124,7 +124,7 @@ export const CardDeposit = () => {
       validaationContext.setIsLoad(true);
       validationContext.setIsVisible(true);
       const service = new AccountServices();
-      const result = await service.depositByCard(globalContext.login.id_login, parseFloat(amount+"00"), coin);
+      const result = await service.depositByCard(globalContext.login.id_login, parseFloat(amount + "00"), coin);
       validationContext.setIsVisible(false);
       validaationContext.setIsLoad(false);
       setUri(result.url);
@@ -148,15 +148,16 @@ export const CardDeposit = () => {
         <ButtonBack onPress={() => navigation.goBack()}>
           <ArrowCircleLeft size={42} color={'#000'} />
         </ButtonBack>
-        <CenterTitleTop>
+        <View style={{flex:1}}>
           <TitleTop>Cartão de Débito/Crédito</TitleTop>
-        </CenterTitleTop>
+        </View>
       </TopContentTitle>
       <Text
         style={{
-          fontSize: 16,
+          fontSize: 18,
           color: 'rgba(113, 126, 149, 1)',
-          fontWeight: '400', marginBottom: 68
+          marginVertical: 26,
+          textAlign: 'center'
         }}>
         Insira os dados para o carregamento da sua conta
       </Text>
@@ -198,7 +199,7 @@ export const CardDeposit = () => {
           index={1}
           snapPoints={snapPoints}
           onChange={handleSheetChanges}>
-          <BottomSheetView style={{ flex: 1 }}>
+          <BottomSheetView style={{ flex: 1, padding: 16 }}>
             <Content>
               <TitleTop>DADOS DO DEPÓSITO</TitleTop>
               <ContentBank>

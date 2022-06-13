@@ -9,8 +9,8 @@ export const ContainerA = styled.View`
 `;
 export const Container = styled(LinearGradient).attrs({
   colors: ['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.3)'],
-  start: {x: 0.0, y: 0.7},
-  end: {x: 0, y: 0.0},
+  start: { x: 0.0, y: 0.7 },
+  end: { x: 0, y: 0.0 },
 })`
   flex: 1;
   padding: 24px;
@@ -25,9 +25,10 @@ export const ContainerTop = styled.View`
 `;
 
 export const ContainerInput = styled.View`
-  width: 100%;
+width: 100%;
+  /* width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
 `;
 
 export const Text = styled.Text`

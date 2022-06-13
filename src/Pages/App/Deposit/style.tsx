@@ -12,14 +12,11 @@ export const Content = styled.View`
 `;
 
 export const TopContentTitle = styled.View`
-
-  /* flex: 1; */
-  margin-top: 78px;
-  margin-bottom: 71px;
   width: 100%;
   flex-direction: row;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
+  margin: 26px 0px;
 `;
 export const ContentRow = styled.View`
   flex-direction: row;
@@ -44,7 +41,6 @@ export const TitleTop = styled.Text`
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  align-self: center;
 `;
 
 export const LabelBank = styled.Text`
@@ -53,8 +49,8 @@ export const LabelBank = styled.Text`
   color: #444;
 `;
 export const ContentBank = styled.View`
-  flex: 1;
   width: 100%;
+  margin-top: 26px;
 `;
 export const Pressable = styled.TouchableOpacity``;
 

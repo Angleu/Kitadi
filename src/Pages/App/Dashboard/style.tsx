@@ -142,7 +142,7 @@ export const ButtonBack = styled.TouchableOpacity`
   border-radius: 30px;
 
   /* padding: 5px; */
-  /* align-self: flex-start; */
+  align-self: flex-start;
 `;
 export const CenterHead = styled.View`
   justify-content: center;

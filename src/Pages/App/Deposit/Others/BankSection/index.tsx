@@ -30,8 +30,6 @@ import {
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import {
-  Container,
-  ContainerA,
   ContainerInput,
   ContainerTop,
   PressSubmitContainer,
@@ -44,6 +42,7 @@ import TransationServices from '../../../../../services/TransationServices';
 import AccountServices from '../../../../../services/AccountServices';
 import AuthenticationContext from '../../../../../context/Authentication';
 import AsyncStorage from '@react-native-community/async-storage'
+import { Container } from '../../../../../components/global';
 
 export const BankSection = () => {
   const navigation = useNavigation();
@@ -188,20 +187,17 @@ export const BankSection = () => {
   }
 
   return (
-    <ContainerA>
-      <ContainerTop>
-        <Pressable
-          onPress={() => {
-            navigation.goBack();
-          }}>
+    <Container>
+      <TopContentTitle>
+        <ButtonBack onPress={() => navigation.goBack()}>
           <ArrowCircleLeft size={42} color={'#000'} />
-        </Pressable>
-        <View style={{ flex: 1 }}>
-          <TitleTop>CARREGAMENTO DE CONTA</TitleTop>
+        </ButtonBack>
+        <View style={{flex:1}}>
+          <TitleTop>Carregamento de Conta</TitleTop>
         </View>
-      </ContainerTop>
+      </TopContentTitle>
       <ContainerInput>
-        <Text>Insira os dados para o carregamento da sua conta</Text>
+        <Text style={{marginTop: 26}}>Insira os dados para o carregamento da sua conta</Text>
         <ContentBank>
           <LabelBank>Selecione o banco de origem</LabelBank>
           <RNPickerSelect
@@ -256,7 +252,7 @@ export const BankSection = () => {
           index={1}
           snapPoints={snapPoints}
           onChange={handleSheetChanges}>
-          <BottomSheetView style={{ flex: 1, paddingVertical: 10 }}>
+          <BottomSheetView style={{ flex: 1, padding: 16 }}>
             <Content>
               <TitleTop>DADOS DO DEPÓSITO</TitleTop>
               <ContentBank>
@@ -288,7 +284,7 @@ export const BankSection = () => {
           </BottomSheetView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
-    </ContainerA>
+    </Container>
 
 
   );
