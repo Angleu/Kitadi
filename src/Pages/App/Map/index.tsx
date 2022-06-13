@@ -30,7 +30,7 @@ const Map = () => {
   const bottomSheetModalRef_Info = useRef<BottomSheetModal>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const initialSnapPoints = useMemo(() => ['25%', 'CONTENT_HEIGHT'], []);
+  const initialSnapPoints = useMemo(() => ['30%', 'CONTENT_HEIGHT'], []);
   const snapPoints = useMemo(() => ['30%', '50%'], []);
 
   // callbacks
