@@ -111,15 +111,8 @@ const DashBoard: React.FC = () => {
   const navigation = useNavigation();
 
   const globalContext = useContext(AuthenticationContext);
-  // ref
-  const modalizeRef = useRef<Modalize>(null);
-  const onOpen = () => {
-    modalizeRef.current?.open();
-  };
 
-  useEffect(() => {
-    onOpen();
-  }, []);
+
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
