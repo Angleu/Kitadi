@@ -1,19 +1,23 @@
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation} from '@react-navigation/native';
-import {Container} from '../Dashboard/style';
+import { useNavigation } from '@react-navigation/native';
+import { Container } from '../Dashboard/style';
+import MapView from 'react-native-maps';
 
 const Map = () => {
   const navigation = useNavigation();
 
   return (
-    <LinearGradient
-      start={{x: 0.0, y: 0.3}}
-      end={{x: 0, y: 0.0}}
+      <MapView
       style={{flex: 1}}
-      colors={['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.3)']}>
-      <Container></Container>
-    </LinearGradient>
+        initialRegion={{
+          latitude: -8.83833,
+          longitude: 13.2344,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        showsUserLocation
+      />
   );
 };
 

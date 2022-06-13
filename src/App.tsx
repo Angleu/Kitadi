@@ -5,13 +5,16 @@ import { ValidationProvider } from "./context/Validation";
 import { LogBox } from "react-native";
 import Routes from "./routes";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { enableLatestRenderer } from 'react-native-maps';
+
+enableLatestRenderer();
 const App: React.FC = () => {
   LogBox.ignoreLogs([
     "ViewPropTypes will be removed",
     "ColorPropType will be removed",
   ])
   return (
-    <GestureHandlerRootView style={{flex:1}}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <ValidationProvider>
         <Routes />
       </ValidationProvider>
