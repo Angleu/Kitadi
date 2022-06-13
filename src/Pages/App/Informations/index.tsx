@@ -33,14 +33,14 @@ const Informations = ({route}) => {
       style={{flex: 1,justifyContent: 'center', alignItems: 'center'}}
       colors={['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.3)']}>
       <Container  >
-      <ContainerTop style={{width:'96%'}}>
+      <ContainerTop style={{alignSelf:'center',width:'96%'}}>
         <Pressable
           onPress={() => {
             navigation.goBack();
           }}>
           <ArrowCircleLeft size={42} color={'#000'} />
         </Pressable>
-        <View style={{flex: 1}}>
+        <View style={{flex: 1,alignSelf:'center'}}>
           <TitleTop>{route.params.item.type}</TitleTop>
         </View>
       </ContainerTop>
@@ -67,7 +67,7 @@ const Informations = ({route}) => {
           <Text style={{fontSize: 24, fontWeight: 'bold', marginBottom: '15%',textAlign:'center'}}>
             {route.params.item.date}
           </Text>
-          <Icons>
+          <Icons style={{alignSelf:'center'}}>
               <Button><Icon source={require('../../../assets/DownloadSimple.png')}/></Button>
               <Button><Icon source={require('../../../assets/Export.png')}/></Button>
           </Icons>

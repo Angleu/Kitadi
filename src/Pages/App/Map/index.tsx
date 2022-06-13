@@ -6,6 +6,7 @@ import {
   CenterTitleTop,
   Container,
   Content,
+  SectionTop,
   Title,
   TopContent,
 } from '../Dashboard/style';
@@ -19,10 +20,12 @@ import BottomSheet, {
   BottomSheetModalProvider,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
+import {ScrollView} from 'react-native';
 import Button from '../../../components/Button';
 import {ContentButton} from '../Deposit/style';
 import {CardWithdraw} from '../../../components/CardWithdraw';
 import {View} from 'react-native';
+import BoxWithdraw from '../../../components/BoxWithdraw/Index';
 
 const Map = () => {
   const navigation = useNavigation();
@@ -107,6 +110,39 @@ const Map = () => {
     },
   ];
 
+  const Withdraw = [
+    {
+      id: '1',
+      Name: 'Carteira',
+      amount: -8.9238339,
+      avatar: 'https://i.pravatar.cc/300',
+    },
+    {
+      id: '2',
+      Name: 'Carteira',
+      amount: -8.9268139,
+      avatar: 'https://i.pravatar.cc/300',
+    },
+    {
+      id: '3',
+      Name: 'Carteira',
+      amount: -8.9293439,
+      avatar: 'https://i.pravatar.cc/300',
+    },
+    {
+      id: '4',
+      amount: -8.9901339,
+      Name: 'Carteira',
+      avatar: 'https://i.pravatar.cc/300',
+    },
+    {
+      id: '5',
+      amount: -8.9908339,
+      Name: 'Carteira',
+      avatar: 'https://i.pravatar.cc/300',
+    },
+  ];
+
   interface marker {
     id: string;
     latitude: number;
@@ -115,7 +151,6 @@ const Map = () => {
   }
 
   const [selectedMarker, setSelectedMarker] = React.useState<marker>();
-
 
   return (
     <>
@@ -159,7 +194,6 @@ const Map = () => {
                 outline={true}
                 onPress={handlePresentModalPress_List}
               />
-             
             </ContentButton>
           </Container>
         </BottomSheetView>
@@ -174,16 +208,17 @@ const Map = () => {
           <BottomSheetView style={{flex: 1}}>
             <Container>
               <CenterTitleTop>
-                <Title>Postos de Levantamento</Title>
+                <Title>Histórico de Levantamento</Title>
               </CenterTitleTop>
+              <BottomSheetFlatList 
+                style={{
+                  flex:1
+                }}
+                data={Withdraw}
+                renderItem={({item}) => <BoxWithdraw data={item} onPress={() => {}} />}
+              />
               <View style={{flex: 1, width: '98%', alignSelf: 'center'}}>
-                <BottomSheetFlatList
-                  data={WithdrawMarks}
-                  keyExtractor={item => item.id}
-                  renderItem={({item}) => (
-                    <CardWithdraw data={item} onPress={() => {}} />
-                  )}
-                />
+                <SectionTop></SectionTop>
                 <>
                   <Button
                     text="Fechar"
@@ -205,11 +240,11 @@ const Map = () => {
           handleIndicatorStyle={{display: 'none'}}>
           <BottomSheetView style={{flex: 1}} onLayout={handleContentLayout}>
             <Container>
-            <CenterTitleTop>
-              <Title>{selectedMarker?.destination}</Title>
-            </CenterTitleTop>
+              <CenterTitleTop>
+                <Title>{selectedMarker?.destination}</Title>
+              </CenterTitleTop>
               <ContentButton style={{width: '96%', alignSelf: 'center'}}>
-              <Button
+                <Button
                   text="Obter Indicações"
                   outline={true}
                   onPress={handleCloseModalPress_Info}

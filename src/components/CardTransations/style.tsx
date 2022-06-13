@@ -28,8 +28,8 @@ export const Amount = styled.Text`
 
 `;
 export const Avatar = styled.Image`
-  width: 42px;
-  height: 42px;
-  border-radius: 22px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
   margin: 10px;
 `;

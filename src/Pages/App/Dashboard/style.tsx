@@ -151,9 +151,10 @@ export const CenterHead = styled.View`
 `;
 
 export const SectionTop = styled.View`
+  /* width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-top: 16px;
+  margin-top: 16px; */
 `;
 
 export const FlatList = styled.FlatList`
