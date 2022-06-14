@@ -6,10 +6,10 @@ export const ContainerButton = styled.View`
   elevation: 5;
 `;
 export const ButtonClose = styled.TouchableOpacity`
-  padding: 2px;
+  padding: 2px 10px;
   background-color: #1d5c63;
   justify-content: flex-end;
-  border-radius: 30px;
+  border-radius: 15px;
 `;
 
 export const Detail = styled.Text`

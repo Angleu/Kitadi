@@ -6,10 +6,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { ScrollView, FlatList } from 'react-native-gesture-handler';
-import { Modalize } from 'react-native-modalize';
+import {Dimensions, Text} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {ScrollView, FlatList} from 'react-native-gesture-handler';
+import {Modalize} from 'react-native-modalize';
 
 import BottomSheet, {
   BottomSheetView,
@@ -45,13 +45,13 @@ import {
   CenterHead,
   ContentRow,
 } from './style';
-import { Content } from '../Deposit/style';
+import {Content} from '../Deposit/style';
 import LinearGradient from 'react-native-linear-gradient';
 import BoxElement from '../../../components/BoxElement/Index';
-import { CardTransations } from '../../../components/CardTransations';
+import {CardTransations} from '../../../components/CardTransations';
 
-import { ContentButton } from '../Deposit/style';
-import { ButtonClose } from '../Details/style';
+import {ContentButton} from '../Deposit/style';
+import {ButtonClose} from '../Details/style';
 
 import AuthenticationContext from '../../../context/Authentication';
 
@@ -107,12 +107,10 @@ const Transations = [
 
 const DashBoard: React.FC = () => {
   const [title, setTitle] = React.useState('');
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const navigation = useNavigation();
 
   const globalContext = useContext(AuthenticationContext);
-
-
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -158,9 +156,9 @@ const DashBoard: React.FC = () => {
 
   return (
     <LinearGradient
-      start={{ x: 0.0, y: 0.3 }}
-      end={{ x: 0, y: 0.0 }}
-      style={{ flex: 1 }}
+      start={{x: 0.0, y: 0.3}}
+      end={{x: 0, y: 0.0}}
+      style={{flex: 1}}
       colors={['rgba(247, 247, 247, 1)', 'rgba(29, 92, 99, 0.9)']}>
       <Container>
         <TopContent>
@@ -177,15 +175,17 @@ const DashBoard: React.FC = () => {
             </LeftViewTop>
           </ContentRow>
           <CenterHead>
-            <AmountTop>AOA {(show) ? globalContext.account.balance : "******"}</AmountTop>
+            <AmountTop>
+              AOA {show ? globalContext.account.balance : '******'}
+            </AmountTop>
             <ButtonVer onPress={() => setShow(!show)}>
               <Eye
                 size={28}
                 weight={'fill'}
                 color={'#fff'}
-                style={{ paddingLeft: 10, display: 'flex' }}
+                style={{paddingLeft: 10, display: 'flex'}}
               />
-              <Detail>{(show) ? "Ocultar" : "Mostrar"}</Detail>
+              <Detail>{show ? 'Ocultar' : 'Mostrar'}</Detail>
             </ButtonVer>
           </CenterHead>
         </TopContent>
@@ -200,18 +200,16 @@ const DashBoard: React.FC = () => {
           animationConfigs={animationConfigs}
           enableContentPanningGesture={true}
           enableHandlePanningGesture={true}
-          handleIndicatorStyle={{ display: 'none' }}
-        >
-
+          handleIndicatorStyle={{display: 'none'}}>
           <LinearGradient
             colors={['rgba(207, 207, 207, 0)', 'rgba(207, 207, 207, 0.26)']}
-            style={{ borderRadius: 24, flex: 1 }}
-            start={{ x: 0.0, y: 0.0 }}
-            end={{ x: 0.0, y: 1.0 }}>
-            <BottomSheetScrollView style={{ flex: 1}}
+            style={{borderRadius: 24, flex: 1}}
+            start={{x: 0.0, y: 0.0}}
+            end={{x: 0.0, y: 1.0}}>
+            <BottomSheetScrollView
+              style={{flex: 1}}
               horizontal={false}
-              scrollsToTop={true}
-            >
+              scrollsToTop={true}>
               <ContainerInformation>
                 <Title>Transaçōes</Title>
                 <SectionTop>
@@ -248,7 +246,7 @@ const DashBoard: React.FC = () => {
                     }}
                   />
                 </SectionTop>
-                <Title>Recentes</Title>
+                <Title style={{marginTop:10}}>Recentes</Title>
                 <BottomSheetFlatList
                   style={{
                     flex: 1,
@@ -258,15 +256,14 @@ const DashBoard: React.FC = () => {
                   horizontal={false}
                   numColumns={4}
                   keyExtractor={item => item.id}
-                  renderItem={({ item }) => (
+                  renderItem={({item}) => (
                     <CardTransations
                       data={item}
                       onPress={() =>
-                        navigation.navigate('Informations', { item })
+                        navigation.navigate('Informations', {item})
                       }
                     />
                   )}
-
                 />
                 {/* <Content>
                   <FlatList
@@ -292,41 +289,55 @@ const DashBoard: React.FC = () => {
 
         <BottomSheetModalProvider>
           <BottomSheetModal
+            backgroundStyle={{backgroundColor: '#fff'}}
             ref={bottomSheetModalRef}
             index={1}
             snapPoints={snapPoints}
             onChange={handleSheetChanges}
-            handleIndicatorStyle={{ display: 'none' }}>
-            <BottomSheetView style={{ flex: 1 }}>
-              <LinearGradient
-                colors={['rgba(207, 207, 207, 0.2)', 'rgba(207, 207, 207, 0)']}
-                style={{ borderRadius: 20, marginHorizontal: 2, flex: 1 }}
-                start={{ x: 0.0, y: 0.0 }}
-                end={{ x: 0.0, y: 1.0 }}>
-                <Content>
-                  <Title>{title}</Title>
+            handleIndicatorStyle={{display: 'none'}}>
+            <BottomSheetView style={{flex: 1}}>
+              <Content style={{alignSelf: 'center', width: '95%'}}>
+                <Title style={{marginVertical: 10}}>{title}</Title>
 
-                  <BottomSheetFlatList
-                    onRefresh={handleRefresh}
-                    data={Transations}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={item => item.id}
-                    renderItem={({ item }) => (
-                      <CardTransations
-                        data={item}
-                        onPress={() => navigation.navigate('Informations', { item })}
-                      />
-                    )}
-                  />
-                </Content>
-                <Content>
-                  <ContentButton style={{ marginBottom: 30 }}>
-                    <ButtonClose onPress={handleCloseModalPress}>
-                      <XCircle size={48} color={'#fff'}></XCircle>
-                    </ButtonClose>
-                  </ContentButton>
-                </Content>
-              </LinearGradient>
+                <BottomSheetFlatList
+                  onRefresh={handleRefresh}
+                  data={Transations}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={item => item.id}
+                  renderItem={({item}) => (
+                    <CardTransations
+                      data={item}
+                      onPress={() =>
+                        navigation.navigate('Informations', {item})
+                      }
+                    />
+                  )}
+                />
+
+                <ContentButton style={{marginBottom: 30}}>
+                  <ButtonClose
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-around',
+                    }}
+                    onPress={handleCloseModalPress}>
+                    <XCircle
+                      size={42}
+                      color={'#fff'}
+                      style={{marginHorizontal: 4, marginVertical: 2}}
+                    />
+                    <Text
+                      style={{
+                        color: '#fff',
+                        fontSize: 24,
+                        marginHorizontal: 4,
+                      }}>
+                      Fechar
+                    </Text>
+                  </ButtonClose>
+                </ContentButton>
+              </Content>
             </BottomSheetView>
           </BottomSheetModal>
         </BottomSheetModalProvider>
